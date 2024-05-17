@@ -1,0 +1,42 @@
+@import "../../assets/style.scss";
+
+header{
+  display:flex;
+  justify-content: space-evenly;
+  align-content: center;
+  height: 150px;
+  background-color: $bleu;
+  font-family: $primary-font;
+  font-weight: 500;
+  ul{
+    margin: auto 0 auto 0;
+    li{
+      display: inline-block;
+      margin-right: 60px;
+    }
+  }
+  .buttons{
+    margin: auto 0 auto 0;
+    button:first-child{
+      width: 190px;
+      font-size: 25px;
+      margin-right: 25px;
+      background-color: $orange;
+      text-transform: uppercase;
+    }
+    button:last-child{
+      min-width: 0;
+      width: 110px;
+      font-size: 15px;
+      background: none;
+      border: solid 1px black;
+    }
+  }
+  .logo{
+    margin-top: 20px;
+    img{
+      width: 180px;
+      height: 180px;
+    }
+  }
+}

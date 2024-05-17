@@ -1,0 +1,70 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue'
+}
+
+//définition des couleurs
+$bleu: #2EC4B6;
+$orange: #EBA43B;
+$jaune: #EBC83B;
+$gris: #506B68;
+
+//taille des textes
+$grand: 4rem;
+$moyen: 2rem;
+$petit: 1rem;
+
+//fonts
+@font-face {
+    font-family: 'Jost';
+    src: url('./fonts/Jost-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'Jost-Italic';
+    src: url('./fonts/Jost-Italic-VariableFont_wght.ttf');
+}
+
+$primary-font: 'Jost', sans-serif;
+$secondary-font: 'Jost-Italic', sans-serif;
+
+//taille des titres
+h1{
+  font-size: $grand;
+  font-family: $primary-font;
+  font-weight: bold;
+  color: black;
+}
+
+h2{
+  font-size: $moyen;
+  font-family: $primary-font;
+  color: black;
+}
+
+button{
+  min-width: 182px;
+  height: 45px;
+  background-color: $bleu;
+  color: black;
+  border-radius: 10px;
+  border: none;
+
+  &:hover{
+    background-color: $jaune;
+  }
+
+  &:active{
+    background-color: $gris;
+    color: white;
+  }
+}
+
+a{
+  color: black;
+  &:hover{
+    color: $gris;
+    text-decoration: underline;
+  }
+}
