@@ -13,10 +13,10 @@ function Footer(){
                 </div>
                 <div className={styles.infos}>
                     <h3>Liens utiles</h3>
-                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Site de la ville de Saguenay <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
-                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Santé gouvernement Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
-                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Rendez-vous santé Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
-                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Site de la ville de Saguenay <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://ville.saguenay.ca"} target={"_blank"} rel={"noreferrer noopener"}>Site de la ville de Saguenay <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://www.quebec.ca/sante"} target={"_blank"} rel={"noreferrer noopener"}>Santé gouvernement Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://rvsq.gouv.qc.ca/accueil/index.html"} target={"_blank"} rel={"noreferrer noopener"}>Rendez-vous santé Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://carnetsante.gouv.qc.ca/portail"} target={"_blank"} rel={"noreferrer noopener"}>Carnet de santé Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
                 </div>
                 <ul className={styles.menu}>
                 <li><Link to="/">Accueil</Link></li>
