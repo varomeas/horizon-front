@@ -15,10 +15,11 @@ function Menu(){
                 <li><Link to="/link4">Alimentation</Link></li>
                 <li><Link to="/link5">Loisirs</Link></li>
                 <li><Link to="/link6">Inter-génération</Link></li>
+                <li><Link to="/link7">Autres</Link></li>
             </ul>
             <div className={styles.buttons}>
                 <button className={"btn"}>Urgence</button>
-                <button className={"btn"}>Mode accessibilité</button>
+                <button className={"btn"}>Accessibilité</button>
             </div>
         </header>
     )

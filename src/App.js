@@ -5,6 +5,7 @@ import {useEffect} from "react";
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import CardNumber from "./components/cards-number/CardNumber";
+import CardCategory from "./components/cards-category/card-category";
 
 
 function App() {
@@ -22,11 +23,11 @@ function App() {
               </div>
               <div>
                   <img src={"images/carousel1.jpg"} />
-                  <p className="legend">Lisez notre nouvel article sur les services à domicile <button className={"btn"}>Voir</button> </p>
+                  <div className="legend"><p>Lisez notre nouvel article sur les services à domicile </p><button className={"btn"}>Lire</button> </div>
               </div>
               <div>
                   <img src={"images/carousel1.jpg"} />
-                  <p className="legend">Legend 3</p>
+                  <div className="legend">Legend 3</div>
               </div>
           </Carousel>
 
@@ -51,8 +52,13 @@ function App() {
                 </div>
 
             </section>
-            <section>
+            <section className={"catégories"}>
                 <h2>Rechercher par catégories</h2>
+                <div>
+                    <CardCategory></CardCategory>
+                    <CardCategory></CardCategory>
+                    <CardCategory></CardCategory>
+                </div>
             </section>
 
         </main>

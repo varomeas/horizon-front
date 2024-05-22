@@ -12,22 +12,21 @@ header{
     margin: auto 0 auto 0;
     li{
       display: inline-block;
-      margin-right: 60px;
+      margin-right: 50px;
     }
   }
   .buttons{
     margin: auto 0 auto 0;
     button:first-child{
       width: 190px;
-      font-size: 25px;
+      font-size: $petit;
       margin-right: 25px;
       background-color: $orange;
       text-transform: uppercase;
     }
     button:last-child{
-      min-width: 0;
       width: 110px;
-      font-size: 15px;
+      font-size: $petit;
       background: none;
       border: solid 1px black;
     }
