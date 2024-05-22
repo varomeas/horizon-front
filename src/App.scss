@@ -1,0 +1,67 @@
+@import "assets/style.scss";
+
+
+.App-header{
+  .search-bar{
+    height: 100px;
+  }
+  .carousel{
+    .slide{
+      .legend{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: 32px;
+        bottom: -32px;
+        width: 30%;
+        height: 100%;
+        border-radius: 0;
+        left: 70%;
+        margin-left: 0%;
+        opacity: 1;
+        background-color: rgba(0,0,0,0.5);
+      }
+    }
+  }
+
+  main{
+    h2{
+      &:before{
+        content: "";
+        display: block;
+        width: 100px;
+        height: 5px;
+        background-color: $orange;
+        margin-bottom: 20px;
+      }
+    }
+    .numéros{
+      > div {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+    .présentation{
+      > div{
+        position: relative;
+      }
+      .text-présentation{
+        position: absolute;
+        width: 60%;
+        padding: 30px;
+        color: white;
+        background-color: $gris;
+        z-index: 1;
+        top: 50%;
+        transform: translateY(-50%);
+        font-family: $primary-font;
+        margin : 0;
+      }
+      img{
+        width: 53.3%;
+        margin-left: 46.7%;
+      }
+    }
+
+  }
+}

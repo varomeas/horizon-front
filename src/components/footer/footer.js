@@ -2,19 +2,24 @@ import { Link } from "react-router-dom"
 
 import styles from "./footer.module.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
 
 function Footer(){
     return(
         <footer>
             <div>
                 <div className={styles.logo}>
-                    <img src="/logo.png" alt="logo" />
+                    <Link to="/"><img src="/logo.png" alt="logo" /></Link>
                 </div>
                 <div className={styles.infos}>
-                    Liens utiles
+                    <h3>Liens utiles</h3>
+                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Site de la ville de Saguenay <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Santé gouvernement Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Rendez-vous santé Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
+                    <p><a href={"https://apple.com"} target={"_blank"} rel={"noreferrer noopener"}>Site de la ville de Saguenay <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
                 </div>
                 <ul className={styles.menu}>
-                <li><Link to="/link1">Accueil</Link></li>
+                <li><Link to="/">Accueil</Link></li>
                 <li><Link to="/link2">Transport</Link></li>
                 <li><Link to="/link3">Santé</Link></li>
                 <li><Link to="/link4">Alimentation</Link></li>

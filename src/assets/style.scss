@@ -4,6 +4,10 @@ body{
   font-family: 'Helvetica Neue'
 }
 
+main{
+  margin: 0 130px 0 130px;
+}
+
 //définition des couleurs
 $bleu: #2EC4B6;
 $orange: #EBA43B;
@@ -41,15 +45,16 @@ h2{
   font-size: $moyen;
   font-family: $primary-font;
   color: black;
+  font-weight: normal;
 }
 
-button{
-  min-width: 182px;
+.btn{
   height: 45px;
   background-color: $bleu;
   color: black;
   border-radius: 10px;
   border: none;
+  font-size: $petit;
 
   &:hover{
     background-color: $jaune;

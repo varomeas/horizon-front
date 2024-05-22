@@ -6,10 +6,10 @@ function Menu(){
     return(
         <header>
             <div className={styles.logo}>
-                <img src="/logo.png" alt="logo" />
+                <Link to="/"><img src="/logo.png" alt="logo" /></Link>
             </div>
             <ul className={styles.menu}>
-                <li><Link to="/link1">Accueil</Link></li>
+                <li><Link to="/">Accueil</Link></li>
                 <li><Link to="/link2">Transport</Link></li>
                 <li><Link to="/link3">Santé</Link></li>
                 <li><Link to="/link4">Alimentation</Link></li>
@@ -17,8 +17,8 @@ function Menu(){
                 <li><Link to="/link6">Inter-génération</Link></li>
             </ul>
             <div className={styles.buttons}>
-                <button>Urgence</button>
-                <button>Mode accessibilité</button>
+                <button className={"btn"}>Urgence</button>
+                <button className={"btn"}>Mode accessibilité</button>
             </div>
         </header>
     )
