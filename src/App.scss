@@ -5,29 +5,7 @@
   .search-bar{
     height: 100px;
   }
-  .carousel{
-    .slide{
-      .legend{
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        font-size: $moyen;
-        bottom: 0;
-        width: 30%;
-        height: 100%;
-        border-radius: 0;
-        left: 70%;
-        margin-left: 0%;
-        opacity: 1;
-        background-color: rgba(0,0,0,0.5);
-        padding: 35px;
-        text-align: left;
-        p{
-          font-family: $primary-font;
-        }
-      }
-    }
-  }
+
 
   main{
     h2{
@@ -52,7 +30,7 @@
       }
       .text-présentation{
         position: absolute;
-        width: 60%;
+        width: 52%;
         padding: 30px;
         color: white;
         background-color: $gris;

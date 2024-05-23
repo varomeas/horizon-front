@@ -2,10 +2,9 @@ import './App.scss';
 import Menu from "./components/header/header";
 import Footer from "./components/footer/footer";
 import {useEffect} from "react";
-import { Carousel } from 'react-responsive-carousel';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import CardNumber from "./components/cards-number/CardNumber";
 import CardCategory from "./components/cards-category/card-category";
+import Carousel from "./components/carousel/carousel";
 
 
 function App() {
@@ -16,21 +15,7 @@ function App() {
           <div className={"search-bar"}>
 
           </div>
-          <Carousel swipeable={true} showThumbs={false} useKeyboardArrows={true} showStatus={false} autoPlay={true} interval={3000} infiniteLoop={true}>
-              <div>
-                  <img src={"images/carousel1.jpg"} />
-
-              </div>
-              <div>
-                  <img src={"images/carousel1.jpg"} />
-                  <div className="legend"><p>Lisez notre nouvel article sur les services à domicile </p><button className={"btn"}>Lire</button> </div>
-              </div>
-              <div>
-                  <img src={"images/carousel1.jpg"} />
-                  <div className="legend">Legend 3</div>
-              </div>
-          </Carousel>
-
+          <Carousel></Carousel>
         <main>
             <section className={"numéros"}>
                 <h2>Trouver facilement un numéro de téléphone</h2>

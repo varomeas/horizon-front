@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/layout";
+import CategoryPage from "./pages/categories/categories";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route path="/" element={<App />}></Route>
+                    <Route path="/categorie/:category" element={<CategoryPage />}></Route>
                 </Route>
             </Routes>
         </BrowserRouter>

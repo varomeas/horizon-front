@@ -19,13 +19,14 @@ function Footer(){
                     <p><a href={"https://carnetsante.gouv.qc.ca/portail"} target={"_blank"} rel={"noreferrer noopener"}>Carnet de santé Québec <FontAwesomeIcon icon={faArrowUpRightFromSquare}/></a> </p>
                 </div>
                 <ul className={styles.menu}>
-                <li><Link to="/">Accueil</Link></li>
-                <li><Link to="/link2">Transport</Link></li>
-                <li><Link to="/link3">Santé</Link></li>
-                <li><Link to="/link4">Alimentation</Link></li>
-                <li><Link to="/link5">Loisirs</Link></li>
-                <li><Link to="/link6">Inter-génération</Link></li>
-            </ul>
+                    <li><Link to="/">Accueil</Link></li>
+                    <li><Link to="/categorie/transport">Transport</Link></li>
+                    <li><Link to="/categorie/sante">Santé</Link></li>
+                    <li><Link to="/categorie/alimentation">Alimentation</Link></li>
+                    <li><Link to="/categorie/loisirs">Loisirs</Link></li>
+                    <li><Link to="/link6">Inter-génération</Link></li>
+                    <li><Link to="/categorie/autres">Autres</Link></li>
+                </ul>
             </div>
             <p className={styles.copyright}>Copyright © 2024 UQAC. Tous droits réservés.</p>
 

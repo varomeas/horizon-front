@@ -39,6 +39,15 @@ h1{
   font-family: $primary-font;
   font-weight: bold;
   color: black;
+  text-align: center;
+  &:after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: $orange;
+    margin: 20px auto;
+  }
 }
 
 h2{
@@ -72,6 +81,10 @@ h2{
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover{
+    text-decoration: none;
+    color: black;
+  }
 }
 
 a{
@@ -79,5 +92,31 @@ a{
   &:hover{
     color: $gris;
     text-decoration: underline;
+  }
+}
+
+.carousel-root{
+  .carousel-slider{
+    .slide{
+      .legend{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: $moyen;
+        bottom: 0;
+        width: 30%;
+        height: 100%;
+        border-radius: 0;
+        left: 70%;
+        margin-left: 0%;
+        opacity: 1;
+        background-color: rgba(0,0,0,0.5);
+        padding: 35px;
+        text-align: left;
+        p{
+          font-family: $primary-font;
+        }
+      }
+    }
   }
 }
