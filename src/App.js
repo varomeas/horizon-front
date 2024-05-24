@@ -10,12 +10,11 @@ import Carousel from "./components/carousel/carousel";
 function App() {
   return (
     <div className="App">
-      <Menu ></Menu>
-      <body className="App-header">
-          <div className={"search-bar"}>
+        <Menu ></Menu>
+        <div className={"search-bar"}>
 
-          </div>
-          <Carousel></Carousel>
+        </div>
+        <Carousel></Carousel>
         <main>
             <section className={"numéros"}>
                 <h2>Trouver facilement un numéro de téléphone</h2>
@@ -50,7 +49,6 @@ function App() {
             </section>
 
         </main>
-      </body>
         <Footer></Footer>
     </div>
   );

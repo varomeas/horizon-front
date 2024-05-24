@@ -19,7 +19,7 @@ const CategoryPage = () => {
     }, []);
 
       return (
-          <body>
+          <>
             <Menu></Menu>
             <Carousel></Carousel>
             <main>
@@ -35,12 +35,12 @@ const CategoryPage = () => {
                 </div>*/}
                 <div className={styles.articles}>
                     {articles.map((article) => (
-                        <CardCategory key={article.id} category={article.category} title={article.title} thumb_article={article.thumb_article} date_publication={article.createdAt} description={article.content}></CardCategory>
+                        <CardCategory key={article.id} articleId={article.id} category={article.category} title={article.title} thumb_article={article.thumb_article} date_publication={article.createdAt} description={article.content}></CardCategory>
                     ))}
                 </div>
             </main>
             <Footer></Footer>
-          </body>
+          </>
 
       );
 }
