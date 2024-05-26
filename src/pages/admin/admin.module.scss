@@ -1,0 +1,16 @@
+.admin{
+  h1{
+    &:after{
+      content: none;
+    }
+    font-size: 2em;
+    font-weight: 500;
+  }
+  .formulaire{
+    display: flex;
+    flex-direction: column;
+    .MuiTextField-root{
+      width: 100%;
+    }
+  }
+}
