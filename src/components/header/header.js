@@ -1,8 +1,23 @@
 import { Link } from "react-router-dom"
 
 import styles from "./header.module.scss";
+import {useContext, useState} from "react";
+import {FontSizeContext} from "../../assets/FontSizeContext";
 
 function Menu(){
+    const {changeFontSize} = useContext(FontSizeContext);
+
+    const [showMenu, setShowMenu] = useState(false);
+
+    const handleAccessibilityClick = () => {
+        setShowMenu(prevShowMenu => !prevShowMenu);
+    };
+
+    const handleFontSizeClick = (size) => {
+        changeFontSize(size);
+        setShowMenu(false);
+    };
+
     return(
         <header>
             <div className={styles.logo}>
@@ -19,7 +34,14 @@ function Menu(){
             </ul>
             <div className={styles.buttons}>
                 <button className={"btn"}>Urgence</button>
-                <button className={"btn"}>Accessibilité</button>
+                <button className={"btn"} onClick={handleAccessibilityClick}>Accessibilité</button>
+                {showMenu && (
+                    <div className={styles.accessibilite_menu}>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('small')}>Petit</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('medium')}>Moyen</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('large')}>Grand</button>
+                    </div>
+                )}
             </div>
         </header>
     )

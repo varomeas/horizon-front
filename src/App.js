@@ -1,13 +1,15 @@
 import './App.scss';
 import Menu from "./components/header/header";
 import Footer from "./components/footer/footer";
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import CardNumber from "./components/cards-number/CardNumber";
 import CardCategory from "./components/cards-category/card-category";
 import Carousel from "./components/carousel/carousel";
+import {FontSizeContext, FontSizeProvider} from "./assets/FontSizeContext";
 
 
 function App() {
+    const {fontSize} = useContext(FontSizeContext);
   return (
     <div className="App">
         <Menu ></Menu>
@@ -27,7 +29,7 @@ function App() {
             </section>
             <section className={"présentation"}>
                 <h2>Qu'est-ce que Horizon Senior Saguenay?</h2>
-                <div>
+                <div style={{fontSize: fontSize}}>
                     <p className={"text-présentation"}>Horizon Senior Saguenay est un organisme à but non lucratif qui a pour mission de faciliter l'accès aux services pour les personnes âgées de la région du Saguenay-Lac-Saint-Jean. Notre site web vous permet de trouver facilement les numéros de téléphone des services de santé, de transport, d'alimentation, de loisirs et bien plus encore.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien. Cras varius mauris non scelerisque hendrerit. Mauris nec hendrerit purus, et dictum leo. Ut quis rutrum sapien, id venenatis eros. Sed ipsum purus, tempus non massa quis, convallis maximus lectus.
 

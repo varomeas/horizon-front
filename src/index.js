@@ -12,21 +12,24 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Admin from "./pages/admin/admin";
+import {FontSizeProvider} from "./assets/FontSizeContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Layout/>}>
-                    <Route path="/" element={<App />}></Route>
-                    <Route path="/categorie/:category" element={<CategoryPage />}></Route>
-                    <Route path={"/categorie/:category/article/:id"} element={<Article/>}></Route>
-                    <Route path={"/admin"} element={<Admin/>}></Route>
-                </Route>
-            </Routes>
-        </BrowserRouter>
-    </React.StrictMode>
+    <FontSizeProvider>
+        <React.StrictMode>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Layout/>}>
+                        <Route path="/" element={<App />}></Route>
+                        <Route path="/categorie/:category" element={<CategoryPage />}></Route>
+                        <Route path={"/categorie/:category/article/:id"} element={<Article/>}></Route>
+                        <Route path={"/admin"} element={<Admin/>}></Route>
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </React.StrictMode>
+    </FontSizeProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
