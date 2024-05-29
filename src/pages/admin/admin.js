@@ -7,9 +7,19 @@ import {useNavigate} from "react-router-dom";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import {globalRegistry} from "quill/core/quill";
+import AdminArticle from "../../components/card-article-admin/card-article-admin";
 
 
 function Admin() {
+
+    const [articles, setArticles] = useState([]);
+
+    useEffect(() => {
+        fetch('http://127.0.0.1:8080/api/articles/')
+            .then(response => response.json())
+            .then(data => setArticles(data))
+            .catch(error => console.error('Erreur:', error));
+    }, []);
 
     const quillInstanceRef = useRef(null);
     const quillRef = useRef(null); // Crée une référence pour stocker l'éditeur Quill
@@ -40,20 +50,24 @@ function Admin() {
     const navigate = useNavigate();
     const currencies = [
         {
-            value: 'USD',
-            label: '$',
+            value: 'Santé',
+            label: 'Santé',
         },
         {
-            value: 'EUR',
-            label: '€',
+            value: 'Transport',
+            label: 'Transport',
         },
         {
-            value: 'BTC',
-            label: '฿',
+            value: 'Alimentation',
+            label: 'Alimentation',
         },
         {
-            value: 'JPY',
-            label: '¥',
+            value: 'Loisirs',
+            label: 'Loisirs',
+        },
+        {
+            value: 'Autre',
+            label: 'Autre',
         },
     ];
 
@@ -76,8 +90,9 @@ function Admin() {
 
         const champsQuill = quillInstanceRef.current;
         const content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
+        const content2 = champsQuill.getContents();
 
-        console.log(content)
+        console.log(content2)
 
         const dataJson = JSON.stringify({
             title: state.title,
@@ -110,59 +125,87 @@ function Admin() {
             .catch(function (error) {
                 console.log(error);
             });
+
     }
+
+    const deleteArticle = (id) => {
+        fetch(`http://127.0.0.1:8080/api/articles/${id}`, {
+            method: 'DELETE',
+        })
+            .then((response) => {
+                if(response.ok) {
+                    setArticles(articles.filter(article => article.id !== id));
+                    alert('Article supprimé avec succès')
+                } else {
+                    alert('Erreur, la suppression de l\'article n\'a pas fonctionné');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    };
   return (
     <>
         <Menu></Menu>
         <main className={styles.admin}>
             <h1>Bienvenue sur votre espace administrateur NOM</h1>
-            <h2>Créer un nouvel article</h2>
-            <Box
-                component="form"
-                sx={{
-                    '& .MuiTextField-root': { m: 1, width: '100%' },
-                }}
-                noValidate
-                autoComplete="off"
-                onSubmit={formSubmit}
-            >
-                <div className={styles.formulaire}>
-                    <TextField
-                        required
-                        name={"title"}
-                        id="outlined-required"
-                        label="Titre"
-                        onChange={InputChange}
-                    />
-                    <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Catégorie de l'article"
-                        helperText="Sélectionnez à quelle catégorie appartient l'article"
-                        name={"category"}
-                        defaultValue="EUR"
-                        onChange={InputChange}
-                    >
-                        {currencies.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        id="outlined-multiline-static"
-                        name={"description"}
-                        label="Description de l'article"
-                        multiline
-                        rows={4}
-                        onChange={InputChange}
-                    />
-                    <div ref={quillRef}>
+            <section>
+                <h2>Créer un nouvel article</h2>
+                <Box
+                    component="form"
+                    sx={{
+                        '& .MuiTextField-root': { m: 1, width: '100%' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                    onSubmit={formSubmit}
+                >
+                    <div className={styles.formulaire}>
+                        <TextField
+                            required
+                            name={"title"}
+                            id="outlined-required"
+                            label="Titre"
+                            onChange={InputChange}
+                        />
+                        <TextField
+                            id="outlined-select-currency"
+                            select
+                            label="Catégorie de l'article"
+                            helperText="Sélectionnez à quelle catégorie appartient l'article"
+                            name={"category"}
+                            defaultValue="Santé"
+                            onChange={InputChange}
+                        >
+                            {currencies.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <TextField
+                            id="outlined-multiline-static"
+                            name={"description"}
+                            label="Description de l'article"
+                            multiline
+                            rows={4}
+                            onChange={InputChange}
+                        />
+                        <div ref={quillRef}>
 
+                        </div>
                     </div>
+                    <button className={"btn"}>Créer l'article</button>
+                </Box>
+            </section>
+            <section>
+                <div className={styles.articles}>
+                    {articles.map(article => (
+                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.description} category={article.category} onDelete={deleteArticle} />
+                    ))}
                 </div>
-                <button className={"btn"}>Créer l'article</button>
-            </Box>
+            </section>
+
         </main>
         <Footer></Footer>
     </>
