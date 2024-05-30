@@ -90,9 +90,6 @@ function Admin() {
 
         const champsQuill = quillInstanceRef.current;
         const content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
-        const content2 = champsQuill.getContents();
-
-        console.log(content2)
 
         const dataJson = JSON.stringify({
             title: state.title,
@@ -144,6 +141,7 @@ function Admin() {
                 console.error('Error:', error);
             });
     };
+
   return (
     <>
         <Menu></Menu>
@@ -199,9 +197,10 @@ function Admin() {
                 </Box>
             </section>
             <section>
+                <h2>Liste des articles existants</h2>
                 <div className={styles.articles}>
                     {articles.map(article => (
-                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.description} category={article.category} onDelete={deleteArticle} />
+                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.description} category={article.category} onDelete={deleteArticle}/>
                     ))}
                 </div>
             </section>

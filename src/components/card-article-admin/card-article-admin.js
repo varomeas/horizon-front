@@ -8,6 +8,7 @@ function AdminArticle(props){
         event.preventDefault();
         props.onDelete(props.id);
     };
+
     return (
         <div className={styles.card_article}>
             <h4>{props.title}</h4>
@@ -18,8 +19,8 @@ function AdminArticle(props){
                 <p>{props.description}</p>
                 {/*<legend className={styles.date}>{props.date_publication}</legend>*/}
                 <div className={styles.actions}>
-                    <Link className={styles.iconAction} to={`article/${props.articleId}`}><FontAwesomeIcon icon={faEye} size={"xl"}/></Link>
-                    <a className={styles.iconAction} onClick={""} href={"#"}><FontAwesomeIcon icon={faPen} size={"xl"}/></a>
+                    <Link className={styles.iconAction} to={`article/${props.id}`}><FontAwesomeIcon icon={faEye} size={"xl"}/></Link>
+                    <Link className={styles.iconAction} to={`edit/${props.id}`}><FontAwesomeIcon icon={faPen} size={"xl"}/></Link>
                     <a className={styles.iconAction} onClick={handleDelete} href={"#"}><FontAwesomeIcon icon={faTrashCan} style={{color: "#e32400",}} size={"xl"}/></a>
                 </div>
             </div>
