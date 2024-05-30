@@ -13,6 +13,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Admin from "./pages/admin/admin";
 import {FontSizeProvider} from "./assets/FontSizeContext";
+import AdminEdit from "./pages/admin/admin-edit";
+import Annuaire from "./pages/annuaire/annuaire";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +27,8 @@ root.render(
                         <Route path="/categorie/:category" element={<CategoryPage />}></Route>
                         <Route path={"/categorie/:category/article/:id"} element={<Article/>}></Route>
                         <Route path={"/admin"} element={<Admin/>}></Route>
+                        <Route path={"/admin/edit/:id"} element={<AdminEdit/>}></Route>
+                        <Route path={"/annuaire"} element={<Annuaire/>}></Route>
                     </Route>
                 </Routes>
             </BrowserRouter>
