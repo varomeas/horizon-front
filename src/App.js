@@ -6,6 +6,7 @@ import CardNumber from "./components/cards-number/CardNumber";
 import CardCategory from "./components/cards-category/card-category";
 import Carousel from "./components/carousel/carousel";
 import {FontSizeContext, FontSizeProvider} from "./assets/FontSizeContext";
+import {Link} from "react-router-dom";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
                     <CardNumber numero={"811"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"} adresse={"305 Rue St Vallier, Chicoutimi, QC G7H 5H6"}></CardNumber>
                     <CardNumber numero={"911"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"}></CardNumber>
                     <CardNumber numero={"911"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"}></CardNumber>
+                    <Link to={"/annuaire"} className={"btn btn-link lien_annuaire"}>Voir la page annuaire</Link>
                 </div>
 
             </section>
