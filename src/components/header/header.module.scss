@@ -2,34 +2,48 @@
 
 header{
   display:flex;
-  justify-content: space-evenly;
-  align-content: center;
+  justify-content: stretch;
+  align-items: center;
   height: 150px;
   background-color: $bleu;
   font-family: $primary-font;
   font-weight: 500;
-  ul{
-    margin: auto 0 auto 0;
+  padding: 1.5rem;
+  gap:1rem;
+  max-height: 100vh;
+  
+  .menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    gap: 1rem 3rem;
+    flex-wrap: wrap;
+    margin: auto;
     li{
       display: inline-block;
-      margin-right: 50px;
     }
   }
+
   .buttons{
-    margin: auto 0 auto 0;
+    display: flex;
+    margin: auto;
+    width: fit-content;
+    align-items: center;
+    justify-content: end;
+    font-size: $petit;
     >button:first-child{
       width: 190px;
-      font-size: $petit;
       margin-right: 25px;
       background-color: $orange;
       text-transform: uppercase;
     }
     >button:nth-child(2){
       width: 110px;
-      font-size: $petit;
       background: none;
       border: solid 1px black;
     }
+  
     .accessibilite_menu{
       position: absolute;
       background-color: white;
@@ -38,11 +52,119 @@ header{
       padding: 20px;
     }
   }
+  .buttonsTel, .burger{
+    display: none;
+  }
   .logo{
-    margin-top: 20px;
+    margin-bottom: -5rem;
     img{
-      width: 180px;
-      height: 180px;
+      min-width: 180px;
+      max-width: 180px;
+      aspect-ratio: 1/1;
+    }
+  }
+
+  @include screen-sm{
+    display:flex;
+    height: fit-content;
+    justify-content: space-between;
+    padding: 1.5rem;
+
+    .menu, .buttons, .logo{
+      display: none;
+    }
+    .burger{
+      display: flex;
+      background: none;
+      border: none;
+      cursor: pointer;
+      button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background-color: none !important;
+        width: fit-content;
+        aspect-ratio: 1/1;
+      }
+    }
+    .buttonsTel{
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: .5rem;
+      
+      button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background-color: $gris;
+        width: fit-content;
+        aspect-ratio: 1/1;
+        cursor: pointer;
+      }
+    }
+
+    .accessibilite_menu{
+      position: absolute;
+      right: 1.5rem;
+      top: 5rem;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      background-color: white;
+      border: solid 1px $orange;
+      border-radius: 7px;
+      padding: 0 1.5rem;
+
+      button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0;
+        background-color: white;
+        width: fit-content;
+        aspect-ratio: 1/1;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          border-bottom: solid 1px $orange;
+        }
+
+
+      }
+    }
+
+    .menu_open{
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      background-color: $bleu;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content:space-evenly;
+      padding: 1.5rem;
+
+      .menu{
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+      }
+
+      .logo{
+        display: flex;
+        width: fit-content;
+        aspect-ratio: 1/1;
+        margin-bottom: 0rem;
+        img{
+          min-width: 150px;
+          max-width: 150px;
+          aspect-ratio: 1/1;
+        }
+      }
     }
   }
 }
