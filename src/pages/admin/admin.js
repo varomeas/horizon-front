@@ -11,7 +11,9 @@ import AdminArticle from "../../components/card-article-admin/card-article-admin
 
 
 function Admin() {
+
     const navigate = useNavigate();
+    //Récupération du token
     const token = localStorage.getItem('token');
     //vérifier que l'utilisateur est connecté
     useEffect(() => {
@@ -21,7 +23,7 @@ function Admin() {
     }, [navigate]);
 
     const [articles, setArticles] = useState([]);
-
+// récupérer tous les articles pour le dashboard
     useEffect(() => {
         fetch('http://127.0.0.1:8080/api/articles/')
             .then(response => response.json())
@@ -101,7 +103,9 @@ function Admin() {
 
         const dataJson = JSON.stringify({
             title: state.title,
-            //category: state.category,
+            description: state.description,
+            author: "1",
+            category: state.category,
             content: content,
         });
         const init = {
