@@ -8,7 +8,16 @@ import AdminArticle from "../../components/card-article-admin/card-article-admin
 import Footer from "../../components/footer/footer";
 
 function AdminEdit() {
+    const navigate = useNavigate();
     const {id } = useParams();
+
+    const token = localStorage.getItem('token');
+    //vérifier que l'utilisateur est connecté
+    useEffect(() => {
+        if (!token) {
+            navigate('/connexion_admin');
+        }
+    }, [navigate]);
 
     const [article, setArticle] = useState([]);
 
@@ -48,7 +57,7 @@ function AdminEdit() {
     }, []);
 
 
-    const navigate = useNavigate();
+
     const currencies = [
         {
             value: 'Santé',

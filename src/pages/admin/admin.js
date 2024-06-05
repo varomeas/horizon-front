@@ -11,6 +11,14 @@ import AdminArticle from "../../components/card-article-admin/card-article-admin
 
 
 function Admin() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    //vérifier que l'utilisateur est connecté
+    useEffect(() => {
+        if (!token) {
+            navigate('/connexion_admin');
+        }
+    }, [navigate]);
 
     const [articles, setArticles] = useState([]);
 
@@ -47,7 +55,7 @@ function Admin() {
     }, []);
 
 
-    const navigate = useNavigate();
+
     const currencies = [
         {
             value: 'Santé',
@@ -100,7 +108,8 @@ function Admin() {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             },
             body: dataJson
         };
