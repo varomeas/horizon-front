@@ -4,6 +4,7 @@ import styles from "./article.module.scss";
 import CardCategory from "../../components/cards-category/card-category";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
+import SearchBar from "../../components/search-bar/search-bar";
 
 function Article() {
     const {id } = useParams();
@@ -24,6 +25,7 @@ function Article() {
   return (
     <>
         <Menu></Menu>
+        <SearchBar></SearchBar>
         <img src={"/images/carousel1.jpg"} alt="Image de la catégorie" width={"100%"}/>
         <main>
             <div className={styles.enTete}>

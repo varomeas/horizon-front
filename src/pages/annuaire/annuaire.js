@@ -2,10 +2,12 @@ import styles from "./annuaire.module.scss";
 import CardNumber from "../../components/cards-number/CardNumber";
 import Menu from "../../components/header/header";
 import Footer from "../../components/footer/footer";
+import SearchBar from "../../components/search-bar/search-bar";
 function Annuaire() {
   return (
     <>
         <Menu></Menu>
+        <SearchBar></SearchBar>
         <main>
             <h1>Annuaire</h1>
             <h2>Services pour la santé</h2>

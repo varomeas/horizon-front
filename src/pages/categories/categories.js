@@ -5,6 +5,7 @@ import Carousel from "../../components/carousel/carousel";
 import CardCategory from "../../components/cards-category/card-category";
 import styles from "./categories.module.scss";
 import {useEffect, useState} from "react";
+import SearchBar from "../../components/search-bar/search-bar";
 
 const CategoryPage = () => {
     const {category} = useParams();
@@ -21,6 +22,7 @@ const CategoryPage = () => {
       return (
           <>
             <Menu></Menu>
+              <SearchBar></SearchBar>
             <Carousel></Carousel>
             <main>
                 <h1>{category}</h1>
