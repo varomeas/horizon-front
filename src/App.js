@@ -7,6 +7,7 @@ import CardCategory from "./components/cards-category/card-category";
 import Carousel from "./components/carousel/carousel";
 import {FontSizeContext, FontSizeProvider} from "./assets/FontSizeContext";
 import {Link} from "react-router-dom";
+import SearchBar from "./components/search-bar/search-bar";
 
 
 function App() {
@@ -14,9 +15,7 @@ function App() {
   return (
     <div className="App">
         <Menu ></Menu>
-        <div className={"search-bar"}>
-
-        </div>
+        <SearchBar></SearchBar>
         <Carousel></Carousel>
         <main>
             <section className={"numéros"}>
