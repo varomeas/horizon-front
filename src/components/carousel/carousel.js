@@ -6,7 +6,7 @@ function Carousel_1(){
         <Carousel swipeable={true} showThumbs={false} useKeyboardArrows={true} showStatus={false} autoPlay={true} interval={3000} infiniteLoop={true}>
             <div>
                 <img src={"/images/carousel1.jpg"} />
-
+                <div className="legend"><p>Lisez notre nouvel article 1 </p><button className={"btn"}>Lire</button> </div>
             </div>
             <div>
                 <img src={"/images/carousel1.jpg"} />
@@ -14,7 +14,7 @@ function Carousel_1(){
             </div>
             <div>
                 <img src={"/images/carousel1.jpg"} />
-                <div className="legend">Legend 3</div>
+                <div className="legend"><p>Lisez notre nouvel article 3 </p><button className={"btn"}>Lire</button> </div>
             </div>
         </Carousel>
     )
