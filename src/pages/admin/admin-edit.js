@@ -112,7 +112,8 @@ function AdminEdit() {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`,
             },
             body: dataJson
         };
@@ -120,11 +121,11 @@ function AdminEdit() {
         fetch(`http://127.0.0.1:8080/api/articles/${id}`, init)
             .then((response) => {
                 if(response.status === 200){
-                    alert('Article créé avec succès');
+                    alert('Article modifié avec succès');
                     //let data = response.json();
                 }
                 else{
-                    alert("Erreur, la création de l'article n'a pas fonctionné")
+                    alert("Erreur, la modification de l'article n'a pas fonctionné")
                 }
                 return response.json();
             })

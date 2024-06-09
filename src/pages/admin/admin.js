@@ -107,13 +107,14 @@ function Admin() {
             author: "1",
             category: state.category,
             content: content,
+            image: "booba.jpg"
         });
         const init = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `${token}`,
             },
             body: dataJson
         };
