@@ -157,6 +157,7 @@ function AdminEdit() {
                             <TextField
                                 id="outlined-controlled"
                                 label="Controlled"
+                                name={"title"}
                                 defaultValue={article.title}
                                 onChange={InputChange}
                             />

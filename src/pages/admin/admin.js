@@ -8,7 +8,53 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import {globalRegistry} from "quill/core/quill";
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
+import axios from "axios";
 
+const axiosInstance = axios.create({
+    baseURL: 'http://127.0.0.1:8080/api/',
+    timeout: 5000,
+    headers: {
+        'Authorization': `${localStorage.getItem('token')}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    }
+});
+
+axiosInstance.interceptors.response.use(async config => {
+    const token = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem('refresh_token');
+
+    // Vérifiez si le token est sur le point d'expirer
+    // Note : Cela dépend de la façon dont vous stockez votre token.
+    // Dans cet exemple, on suppose que le token est un JWT et qu'il contient une propriété `exp` qui indique quand le token expire.
+    const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
+    const currentTime = Date.now() / 1000;
+
+    if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
+        try {
+            // Demande un nouveau token
+            const response = await axiosInstance.post('/auth/refresh-token', {
+                refresh_token: refreshToken
+            }, {
+                headers: {
+                    'Authorization': `${token}`,
+                }
+            });
+
+            // Stocke le nouveau token dans le local storage
+            localStorage.setItem('token', response.data.token);
+
+            // Met à jour le token pour la requête en cours
+            config.headers['Authorization'] = `Bearer ${response.data.token}`;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    return config;
+}, error => {
+    return Promise.reject(error);
+});
 
 function Admin() {
 
@@ -109,7 +155,7 @@ function Admin() {
             content: content,
             image: "booba.jpg"
         });
-        const init = {
+        /*const init = {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -135,12 +181,24 @@ function Admin() {
             })
             .catch(function (error) {
                 console.log(error);
+            });*/
+        axiosInstance.post('/articles/', dataJson)
+            .then(response => {
+                // Gérez la réponse ici
+                console.log(response.data);
+                alert('Article créé avec succès');
+                navigate('/categorie/transport/article/' + response.data.id)
+            })
+            .catch(error => {
+                // Gérez l'erreur ici
+                console.error(error);
+                alert("Erreur, la création de l'article n'a pas fonctionné")
             });
 
     }
 
     const deleteArticle = (id) => {
-        fetch(`http://127.0.0.1:8080/api/articles/${id}`, {
+        /*fetch(`http://127.0.0.1:8080/api/articles/${id}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `${token}`,
@@ -156,6 +214,19 @@ function Admin() {
             })
             .catch((error) => {
                 console.error('Error:', error);
+            });*/
+
+        axiosInstance.delete(`/articles/${id}`)
+            .then(response => {
+                // Gérez la réponse ici
+                alert('Article supprimé avec succès');
+                setArticles(articles.filter(article => article.id !== id));
+                console.log(response.data);
+            })
+            .catch(error => {
+                // Gérez l'erreur ici
+                alert('Erreur, la suppression de l\'article n\'a pas fonctionné');
+                console.error(error);
             });
     };
 
