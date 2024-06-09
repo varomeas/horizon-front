@@ -142,6 +142,9 @@ function Admin() {
     const deleteArticle = (id) => {
         fetch(`http://127.0.0.1:8080/api/articles/${id}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': `${token}`,
+            }
         })
             .then((response) => {
                 if(response.ok) {
