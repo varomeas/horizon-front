@@ -21,6 +21,10 @@ const CategoryPage = () => {
             .catch(error => console.error('Erreur:', error));
     }, []);
 
+    for (let i = 0; i < articles.length; i++) {
+
+    }
+
       return (
           <>
             <Menu></Menu>
@@ -39,7 +43,7 @@ const CategoryPage = () => {
                 </div>*/}
                 <div className={styles.articles}>
                     {articles.map((article) => (
-                        <CardCategory key={article.id} articleId={article.id} category={article.category} title={article.title} thumb_article={article.thumb_article} date_publication={article.createdAt} description={article.description}></CardCategory>
+                        <CardCategory key={article.id} articleId={article.id} category={article.category} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline}></CardCategory>
                     ))}
                 </div>
             </main>

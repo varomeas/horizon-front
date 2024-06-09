@@ -15,7 +15,7 @@ const axiosInstance = axios.create({
     timeout: 5000,
     headers: {
         'Authorization': `${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Accept': 'application/json',
     }
 });
@@ -49,6 +49,11 @@ axiosInstance.interceptors.response.use(async config => {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    if (tokenExp < currentTime) {
+        // Si le token est expiré, supprimez-le du session storage
+        sessionStorage.removeItem('token');
     }
 
     return config;
@@ -130,7 +135,9 @@ function Admin() {
     const [state, setState] = useState({
         title: "",
         category: "",
-        content: ""
+        description: "",
+        content: "",
+        photo: null,
     });
 
     const InputChange = (event) => {
@@ -141,20 +148,37 @@ function Admin() {
         }));
     };
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setState((props) => ({
+            ...props,
+            photo: file,
+        }));
+    };
+
+
     const formSubmit = (event) => {
         event.preventDefault();
 
         const champsQuill = quillInstanceRef.current;
         const content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
 
-        const dataJson = JSON.stringify({
+        const formData = new FormData();
+        formData.append('title', state.title);
+        formData.append('headline', state.description);
+        formData.append('author', "1");
+        formData.append('category', state.category);
+        formData.append('content', content);
+        formData.append('image', state.photo);
+        /*const dataJson = JSON.stringify({
             title: state.title,
             description: state.description,
             author: "1",
             category: state.category,
             content: content,
-            image: "booba.jpg"
-        });
+            image: state.photo
+        });*/
+
         /*const init = {
             method: 'POST',
             headers: {
@@ -182,7 +206,7 @@ function Admin() {
             .catch(function (error) {
                 console.log(error);
             });*/
-        axiosInstance.post('/articles/', dataJson)
+        axiosInstance.post('/articles/', formData)
             .then(response => {
                 // Gérez la réponse ici
                 console.log(response.data);
@@ -280,6 +304,11 @@ function Admin() {
                         <div ref={quillRef}>
 
                         </div>
+                        <TextField
+                            type="file"
+                            name="photo"
+                            onChange={handleFileChange}
+                        />
                     </div>
                     <button className={"btn"}>Créer l'article</button>
                 </Box>
@@ -288,7 +317,7 @@ function Admin() {
                 <h2>Liste des articles existants</h2>
                 <div className={styles.articles}>
                     {articles.map(article => (
-                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.description} category={article.category} onDelete={deleteArticle}/>
+                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.headline} category={article.category} onDelete={deleteArticle}/>
                     ))}
                 </div>
             </section>
