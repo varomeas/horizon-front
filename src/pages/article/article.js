@@ -3,10 +3,12 @@ import Footer from "../../components/footer/footer";
 import styles from "./article.module.scss";
 import CardCategory from "../../components/cards-category/card-category";
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import SearchBar from "../../components/search-bar/search-bar";
+import {FontSizeContext} from "../../assets/FontSizeContext";
 
 function Article() {
+    const {fontSize} = useContext(FontSizeContext);
     const {id } = useParams();
 
     const [article, setArticle] = useState([]);
@@ -27,7 +29,7 @@ function Article() {
         <Menu></Menu>
         <SearchBar></SearchBar>
         <img src={"/images/carousel1.jpg"} alt="Image de la catégorie" width={"100%"}/>
-        <main>
+        <main style={{fontSize: fontSize}}>
             <div className={styles.enTete}>
                 <h1>{article.title}</h1>
                 <span className={styles.DateModif}>{article.updatedAt}</span>

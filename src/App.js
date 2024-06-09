@@ -17,7 +17,7 @@ function App() {
         <Menu ></Menu>
         <SearchBar></SearchBar>
         <Carousel></Carousel>
-        <main>
+        <main style={{fontSize: fontSize}}>
             <section className={"numéros"}>
                 <h2>Trouver facilement un numéro de téléphone</h2>
                 <div>
@@ -30,7 +30,7 @@ function App() {
             </section>
             <section className={"présentation"}>
                 <h2>Qu'est-ce que Horizon Senior Saguenay?</h2>
-                <div style={{fontSize: fontSize}}>
+                <div >
                     <p className={"text-présentation"}>Horizon Senior Saguenay est un organisme à but non lucratif qui a pour mission de faciliter l'accès aux services pour les personnes âgées de la région du Saguenay-Lac-Saint-Jean. Notre site web vous permet de trouver facilement les numéros de téléphone des services de santé, de transport, d'alimentation, de loisirs et bien plus encore.
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien. Cras varius mauris non scelerisque hendrerit. Mauris nec hendrerit purus, et dictum leo. Ut quis rutrum sapien, id venenatis eros. Sed ipsum purus, tempus non massa quis, convallis maximus lectus.
 

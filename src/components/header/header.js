@@ -33,15 +33,15 @@ function Menu(){
                 <li><Link to="/categorie/autres">Autres</Link></li>
             </ul>
             <div className={styles.buttons}>
-                <button className={"btn"}>Urgence</button>
-                <button className={"btn"} onClick={handleAccessibilityClick}>Accessibilité</button>
-                {showMenu && (
+                <Link className={`btn btn-link ${styles.urgence}`} to={"/annuaire"}>Urgence</Link>
+                {/*<button className={"btn"} onClick={handleAccessibilityClick}>Accessibilité</button>
+                {showMenu && (*/}
                     <div className={styles.accessibilite_menu}>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('small')}>Petit</button>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('medium')}>Moyen</button>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('large')}>Grand</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('medium')}>Petit</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('large')}>Moyen</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('x-large')}>Grand</button>
                     </div>
-                )}
+                {/*)}*/}
             </div>
         </header>
     )

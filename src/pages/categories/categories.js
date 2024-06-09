@@ -4,10 +4,12 @@ import Footer from "../../components/footer/footer";
 import Carousel from "../../components/carousel/carousel";
 import CardCategory from "../../components/cards-category/card-category";
 import styles from "./categories.module.scss";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import SearchBar from "../../components/search-bar/search-bar";
+import {FontSizeContext} from "../../assets/FontSizeContext";
 
 const CategoryPage = () => {
+    const {fontSize} = useContext(FontSizeContext);
     const {category} = useParams();
 
     const [articles, setArticles] = useState([]);
@@ -24,7 +26,7 @@ const CategoryPage = () => {
             <Menu></Menu>
               <SearchBar></SearchBar>
             <Carousel></Carousel>
-            <main>
+            <main style={{fontSize: fontSize}}>
                 <h1>{category}</h1>
                 <h2>Tous nos articles de la catégorie {category}</h2>
                 {/*<div className={styles.articles}>

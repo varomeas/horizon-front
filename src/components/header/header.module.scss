@@ -17,25 +17,45 @@ header{
   }
   .buttons{
     margin: auto 0 auto 0;
-    >button:first-child{
-      width: 190px;
+    .urgence{
+      width: 195px;
       font-size: $petit;
-      margin-right: 25px;
       background-color: $orange;
       text-transform: uppercase;
     }
-    >button:nth-child(2){
+    /*>button:nth-child(2){
       width: 110px;
       font-size: $petit;
       background: none;
       border: solid 1px black;
-    }
+    }*/
     .accessibilite_menu{
-      position: absolute;
+      /*position: absolute;
       background-color: white;
       border: solid 1px black;
       border-radius: 10px;
-      padding: 20px;
+      padding: 20px;*/
+      display: flex;
+      margin-top: 5px;
+      button{
+        width: 110px;
+        font-size: $petit;
+        background: none;
+        border: solid 1px black;
+        margin-right: 10px;
+      }
+      button:first-child{
+        font-size: 0.5em;
+        width: 20%;
+      }
+      button:nth-child(2){
+        font-size: $petit;
+        width: 30%;
+      }
+      button:last-child{
+        font-size: 1.5em;
+        width: 49%;
+      }
     }
   }
   .logo{
