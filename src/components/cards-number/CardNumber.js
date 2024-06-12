@@ -11,7 +11,7 @@ function CardNumber(props){
         window.open(url);
     }
     return(
-        <div className={styles.card}>
+        <div className={`${styles.card} ${props.className}`}>
             <div className={styles.thumb}>
                 <img src={props.url_image} alt={"Plouf"}/>
             </div>
