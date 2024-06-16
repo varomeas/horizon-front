@@ -17,6 +17,8 @@ import AdminEdit from "./pages/admin/admin-edit";
 import Annuaire from "./pages/annuaire/annuaire";
 import Connexion from "./pages/connexion/connexion";
 import PrivateRoute from "./components/PrivateRoute";
+import Intergeneration from "./pages/intergeneration/intergeneration";
+import NotFound from "./components/404/404";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -32,6 +34,8 @@ root.render(
                         <Route path={"/admin/edit/:id"} element={<AdminEdit/>}></Route>
                         <Route path={"/annuaire"} element={<Annuaire/>}></Route>
                         <Route path={"/connexion_admin"} element={<Connexion/>}></Route>
+                        <Route path={"/intergeneration"} element={<Intergeneration/>}></Route>
+                        <Route path='*' element={<NotFound />}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
