@@ -16,4 +16,27 @@
       width: 100%;
     }
   }
+  .titre_liste_article{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .btn_delete{
+      background-color: #bd0f0f;
+      color: white;
+      font-weight: bold;
+
+    }
+
+  }
+}
+
+.logout{
+  text-align: center;
+  margin: 20px 0;
+  .btn_logout{
+    background-color: #bd0f0f;
+    color: white;
+    font-weight: bold;
+  }
 }

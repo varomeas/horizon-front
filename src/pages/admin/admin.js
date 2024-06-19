@@ -1,7 +1,7 @@
 import Menu from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import styles from "./admin.module.scss";
-import {Box, MenuItem, TextField} from "@mui/material";
+import {Box, Button, MenuItem, TextField} from "@mui/material";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Quill from "quill";
@@ -27,36 +27,35 @@ function Admin() {
         const token = localStorage.getItem('token');
         const refreshToken = localStorage.getItem('refresh_token');
 
-        // Vérifiez si le token est sur le point d'expirer
-        // Note : Cela dépend de la façon dont vous stockez votre token.
-        // Dans cet exemple, on suppose que le token est un JWT et qu'il contient une propriété `exp` qui indique quand le token expire.
-        const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
-        const currentTime = Date.now() / 1000;
+        if(token) {
+            const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
+            const currentTime = Date.now() / 1000;
 
-        if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
-            try {
-                // Demande un nouveau token
-                const response = await axiosInstance.post('/auth/refresh-token', {
-                    refresh_token: refreshToken
-                }, {
-                    headers: {
-                        'Authorization': `${token}`,
-                    }
-                });
+            if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
+                try {
+                    // Demande un nouveau token
+                    const response = await axiosInstance.post('/auth/refresh-token', {
+                        refresh_token: refreshToken
+                    }, {
+                        headers: {
+                            'Authorization': `${token}`,
+                        }
+                    });
 
-                // Stocke le nouveau token dans le local storage
-                localStorage.setItem('token', response.data.token);
+                    // Stocke le nouveau token dans le local storage
+                    localStorage.setItem('token', response.data.token);
 
-                // Met à jour le token pour la requête en cours
-                config.headers['Authorization'] = `Bearer ${response.data.token}`;
-            } catch (error) {
-                console.error(error);
+                    // Met à jour le token pour la requête en cours
+                    config.headers['Authorization'] = `Bearer ${response.data.token}`;
+                } catch (error) {
+                    console.error(error);
+                }
             }
-        }
 
-        if (tokenExp < currentTime) {
-            // Si le token est expiré, supprimez-le du session storage
-            localStorage.removeItem('token');
+            if (tokenExp < currentTime) {
+                // Si le token est expiré, suppression du session storage
+                localStorage.removeItem('token');
+            }
         }
 
         return config;
@@ -72,17 +71,20 @@ function Admin() {
         if (!token) {
             navigate('/connexion_admin');
         }
-        const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
-        const currentTime = Date.now() / 1000;
-        if (tokenExp < currentTime) {
-            // Si le token est expiré, supprimez-le du session storage
-            localStorage.removeItem('token');
-            navigate('/connexion_admin');
+        if(token){
+            const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
+            const currentTime = Date.now() / 1000;
+            if (tokenExp < currentTime) {
+                // Si le token est expiré, suppression du session storage
+                localStorage.removeItem('token');
+                navigate('/connexion_admin');
+            }
         }
+
     }, [navigate, token]);
 
     const [articles, setArticles] = useState([]);
-// récupérer tous les articles pour le dashboard
+    // récupérer tous les articles pour le dashboard
     useEffect(() => {
         fetch('http://127.0.0.1:8080/api/articles/')
             .then(response => response.json())
@@ -109,7 +111,7 @@ function Admin() {
                         ['clean']
                     ]
                 },
-                // Ajoutez d'autres options ici si nécessaire
+
             });
             quillInstanceRef.current = quill;
         }
@@ -217,13 +219,12 @@ function Admin() {
             });*/
         axiosInstance.post('/articles/', formData)
             .then(response => {
-                // Gérez la réponse ici
                 console.log(response.data);
                 alert('Article créé avec succès');
                 navigate('/categorie/transport/article/' + response.data.id)
             })
             .catch(error => {
-                // Gérez l'erreur ici
+
                 console.error(error);
                 alert("Erreur, la création de l'article n'a pas fonctionné")
             });
@@ -251,18 +252,34 @@ function Admin() {
 
         axiosInstance.delete(`/articles/${id}`)
             .then(response => {
-                // Gérez la réponse ici
                 alert('Article supprimé avec succès');
                 setArticles(articles.filter(article => article.id !== id));
                 console.log(response.data);
             })
             .catch(error => {
-                // Gérez l'erreur ici
                 alert('Erreur, la suppression de l\'article n\'a pas fonctionné');
                 console.error(error);
             });
     };
+    const handleLogout = () => {
+        // Supprimez le token du localStorage
+        localStorage.removeItem('token');
 
+        // Rechargez la page
+        window.location.reload();
+    };
+
+    const deleteAllarticles = () => {
+        axiosInstance.delete(`/articles/`)
+            .then(response => {
+                alert('Tous les article ont été supprimés avec succès!');
+                setArticles([]);
+            })
+            .catch(error => {
+                alert('Erreur, la suppression des articles n\'a pas fonctionné');
+                console.error(error);
+            });
+    }
   return (
     <>
         <Menu></Menu>
@@ -282,12 +299,14 @@ function Admin() {
                     <div className={styles.formulaire}>
                         <TextField
                             required
+                            className={"input"}
                             name={"title"}
                             id="outlined-required"
                             label="Titre"
                             onChange={InputChange}
                         />
                         <TextField
+                            className={"input"}
                             id="outlined-select-currency"
                             select
                             label="Catégorie de l'article"
@@ -303,6 +322,7 @@ function Admin() {
                             ))}
                         </TextField>
                         <TextField
+                            className={"input"}
                             id="outlined-multiline-static"
                             name={"description"}
                             label="Description de l'article"
@@ -310,11 +330,12 @@ function Admin() {
                             rows={4}
                             onChange={InputChange}
                         />
-                        <div ref={quillRef}>
+                        <div ref={quillRef} className={"input"}>
 
                         </div>
                         <label>Ajouter une photo à l'article</label>
                         <TextField
+                            className={"input"}
                             type="file"
                             name="photo"
                             onChange={handleFileChange}
@@ -324,15 +345,26 @@ function Admin() {
                 </Box>
             </section>
             <section>
-                <h2>Liste des articles existants</h2>
+                <div className={styles.titre_liste_article}>
+                    <h2>Liste des articles existants</h2>
+                    <button className={`btn ${styles.btn_delete}`} onClick={deleteAllarticles}>Effacer tous les articles</button>
+                </div>
+
                 <div className={styles.articles}>
-                    {articles.map(article => (
-                        <AdminArticle key={article.id} id={article.id} title={article.title} description={article.headline} category={article.category} onDelete={deleteArticle}/>
-                    ))}
+                    {articles.length > 0 ? (
+                        articles.map(article => (
+                            <AdminArticle key={article.id} id={article.id} title={article.title} description={article.headline} category={article.category} onDelete={deleteArticle}/>
+                        ))
+                    ) : (
+                        <p>Aucun article existant!</p>
+                    )}
                 </div>
             </section>
 
         </main>
+        <div className={styles.logout}>
+            <button className={`btn ${styles.btn_logout}`} onClick={handleLogout}>Se déconnecter</button>
+        </div>
         <Footer></Footer>
     </>
   );
