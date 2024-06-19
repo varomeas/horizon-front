@@ -18,12 +18,14 @@ function Menu(){
         setShowMenu(false);
     };
 
+    const {fontSize} = useContext(FontSizeContext);
+
     return(
         <header>
             <div className={styles.logo}>
                 <Link to="/"><img src="/logo.png" alt="logo" /></Link>
             </div>
-            <ul className={styles.menu}>
+            <ul className={styles.menu} style={{fontSize: fontSize}}>
                 <li><Link to="/">Accueil</Link></li>
                 <li><Link to="/categorie/transport">Transport</Link></li>
                 <li><Link to="/categorie/sante">Santé</Link></li>
