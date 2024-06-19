@@ -10,58 +10,59 @@ import {globalRegistry} from "quill/core/quill";
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
 import axios from "axios";
 
-const axiosInstance = axios.create({
-    baseURL: 'http://127.0.0.1:8080/api/',
-    timeout: 5000,
-    headers: {
-        'Authorization': `${localStorage.getItem('token')}`,
-        'Content-Type': 'multipart/form-data',
-        'Accept': 'application/json',
-    }
-});
 
-axiosInstance.interceptors.response.use(async config => {
-    const token = localStorage.getItem('token');
-    const refreshToken = localStorage.getItem('refresh_token');
-
-    // Vérifiez si le token est sur le point d'expirer
-    // Note : Cela dépend de la façon dont vous stockez votre token.
-    // Dans cet exemple, on suppose que le token est un JWT et qu'il contient une propriété `exp` qui indique quand le token expire.
-    const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
-    const currentTime = Date.now() / 1000;
-
-    if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
-        try {
-            // Demande un nouveau token
-            const response = await axiosInstance.post('/auth/refresh-token', {
-                refresh_token: refreshToken
-            }, {
-                headers: {
-                    'Authorization': `${token}`,
-                }
-            });
-
-            // Stocke le nouveau token dans le local storage
-            localStorage.setItem('token', response.data.token);
-
-            // Met à jour le token pour la requête en cours
-            config.headers['Authorization'] = `Bearer ${response.data.token}`;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    if (tokenExp < currentTime) {
-        // Si le token est expiré, supprimez-le du session storage
-        sessionStorage.removeItem('token');
-    }
-
-    return config;
-}, error => {
-    return Promise.reject(error);
-});
 
 function Admin() {
+    const axiosInstance = axios.create({
+        baseURL: 'http://127.0.0.1:8080/api/',
+        timeout: 5000,
+        headers: {
+            'Authorization': `${localStorage.getItem('token')}`,
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+        }
+    });
+
+    axiosInstance.interceptors.response.use(async config => {
+        const token = localStorage.getItem('token');
+        const refreshToken = localStorage.getItem('refresh_token');
+
+        // Vérifiez si le token est sur le point d'expirer
+        // Note : Cela dépend de la façon dont vous stockez votre token.
+        // Dans cet exemple, on suppose que le token est un JWT et qu'il contient une propriété `exp` qui indique quand le token expire.
+        const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
+        const currentTime = Date.now() / 1000;
+
+        if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
+            try {
+                // Demande un nouveau token
+                const response = await axiosInstance.post('/auth/refresh-token', {
+                    refresh_token: refreshToken
+                }, {
+                    headers: {
+                        'Authorization': `${token}`,
+                    }
+                });
+
+                // Stocke le nouveau token dans le local storage
+                localStorage.setItem('token', response.data.token);
+
+                // Met à jour le token pour la requête en cours
+                config.headers['Authorization'] = `Bearer ${response.data.token}`;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        if (tokenExp < currentTime) {
+            // Si le token est expiré, supprimez-le du session storage
+            localStorage.removeItem('token');
+        }
+
+        return config;
+    }, error => {
+        return Promise.reject(error);
+    });
 
     const navigate = useNavigate();
     //Récupération du token
@@ -71,7 +72,14 @@ function Admin() {
         if (!token) {
             navigate('/connexion_admin');
         }
-    }, [navigate]);
+        const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
+        const currentTime = Date.now() / 1000;
+        if (tokenExp < currentTime) {
+            // Si le token est expiré, supprimez-le du session storage
+            localStorage.removeItem('token');
+            navigate('/connexion_admin');
+        }
+    }, [navigate, token]);
 
     const [articles, setArticles] = useState([]);
 // récupérer tous les articles pour le dashboard
@@ -170,6 +178,7 @@ function Admin() {
         formData.append('category', state.category);
         formData.append('content', content);
         formData.append('image', state.photo);
+        console.log(formData);
         /*const dataJson = JSON.stringify({
             title: state.title,
             description: state.description,
@@ -304,6 +313,7 @@ function Admin() {
                         <div ref={quillRef}>
 
                         </div>
+                        <label>Ajouter une photo à l'article</label>
                         <TextField
                             type="file"
                             name="photo"
