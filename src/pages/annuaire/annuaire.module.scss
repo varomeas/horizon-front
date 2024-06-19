@@ -1,5 +1,5 @@
 .categories_numero {
-  display: grid;
+  /*display: grid;
   grid-template-columns: repeat(2, 1fr); // Crée deux colonnes de largeur égale
   grid-template-areas: 'full full' 'half half2';
 
@@ -11,5 +11,14 @@
   }
     .half2 {
         grid-area: half2;
+    }*/
+    display: flex;
+  flex-wrap: wrap;
+  .full{
+    width: calc(50% - 45px);
+    &:first-child {
+      width: 100%;
     }
+  }
+
 }

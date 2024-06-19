@@ -19,8 +19,11 @@
       > div {
         display: flex;
         flex-wrap: wrap;
-        .card:nth-child(2n){
-          margin: 15px 0 15px 15px;
+        .card{
+          width: calc(50% - 62px);
+          &:nth-child(2n){
+            margin: 15px 0 15px 15px;
+          }
         }
         .lien_annuaire{
           margin: auto;

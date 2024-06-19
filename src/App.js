@@ -21,9 +21,9 @@ function App() {
             <section className={"numéros"}>
                 <h2>Trouver facilement un numéro de téléphone</h2>
                 <div className={"numéros_accueil"}>
-                    <CardNumber className={"card"} numero={"811"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"} adresse={"305 Rue St Vallier, Chicoutimi, QC G7H 5H6"}></CardNumber>
-                    <CardNumber className={"card"} numero={"911"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"}></CardNumber>
-                    <CardNumber className={"card"} numero={"911"} titre={"Police - Ambulance"} description={"Lorem ipsum blablaaaaaaaaaaaaaaaaaa"} url_image={"images/thumb1.png"}></CardNumber>
+                    <CardNumber className={"card"} numero={"911"} titre={"Police - Ambulance"} description={"Composez le 911 pour les urgences seulement pour être mis en relation avec les pompiers ou bien la police. Il doit être utilisé seulement pour les cas les plus graves. Composez le 811 pour un besoin non urgent."} url_image={"images/thumb1.png"} adresse={"305 Rue St Vallier, Chicoutimi, QC G7H 5H6"}></CardNumber>
+                    <CardNumber className={"card"} numero={"811"} titre={"Info-Santé"} description={"Composez ce numéro pour être mis en relation avec un professionnel de santé qui saura vous aider pour vos problèmes de santé non urgent. C'est un numéro d'information si vous avez des questions sur votre santé. "} url_image={"images/thumb1.png"}></CardNumber>
+                    <CardNumber className={"card"} numero={"800 463-5060"} titre={"Anti-poison"} description={"Appelez le centre anti-poison pour toute ingestion de produit chimique ou dangereux ou bien en cas d'intoxication alimentaire."} url_image={"images/thumb1.png"} adresse={"1270, chemin Sainte-Foy, Pavillon Jeffery Hale, 3e étage, Québec, G1S 2M4"}></CardNumber>
                     <Link to={"/annuaire"} className={"btn btn-link lien_annuaire"}>Voir la page annuaire</Link>
                 </div>
 

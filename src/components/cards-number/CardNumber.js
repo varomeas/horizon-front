@@ -3,11 +3,11 @@ import styles from "./cardnumber.module.scss";
 function CardNumber(props){
 
     const callNumber = (numero) => {
-        const url = `tel:${numero}`;
+        const url = `tel:+1 ${numero}`;
         window.open(url, '_blank');
     }
     const openMap = (adresse) => {
-        const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(adresse)}`;
+        const url = `https://www.google.com/maps/dir//${encodeURIComponent(adresse)}`;
         window.open(url);
     }
     return(
