@@ -1,5 +1,17 @@
 @import "src/assets/style.scss";
 
+.image_couverture{
+    width: 100%;
+    height: 400px;
+    img{
+        width: 100%;
+        height: 100%; // Ajoutez cette ligne pour que l'image prenne toute la hauteur de la div
+        object-fit: cover;
+        object-position: top;
+    }
+
+}
+
 .enTete{
   text-align: center;
   h1{

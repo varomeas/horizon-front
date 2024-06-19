@@ -24,11 +24,22 @@ function Article() {
         return <div>Chargement...</div>;
     }
 
+    let image_couverture;
+    if(article.imageUrl){
+        image_couverture = <img src={`http://localhost:8080${article.imageUrl}`} alt="Image de la catégorie" width={"100%"}/>
+    }
+    else {
+        image_couverture = <img src={"/images/accueil1.jpg"} alt="Cover de la catégorie"/>
+    }
+
   return (
     <>
         <Menu></Menu>
         <SearchBar></SearchBar>
-        <img src={"/images/carousel1.jpg"} alt="Image de la catégorie" width={"100%"}/>
+        <div className={styles.image_couverture}>
+            {image_couverture}
+        </div>
+
         <main style={{fontSize: fontSize}}>
             <div className={styles.enTete}>
                 <h1>{article.title}</h1>
