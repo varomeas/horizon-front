@@ -5,6 +5,7 @@ import {useContext, useState} from "react";
 import {FontSizeContext} from "../../assets/FontSizeContext";
 
 // Import des images
+import logo from "../../assets/logo.png";
 import burgerIcon from "../../assets/icons/burger.svg";
 import croixIcon from "../../assets/icons/croix.svg";
 import loupeIcon from "../../assets/icons/loupe.svg";
@@ -33,7 +34,7 @@ function Menu(){
     return(
         <header>
             <div className={styles.logo}>
-                <Link to="/"><img src="./logo.png" alt="logo" /></Link>
+                <Link to="/"><img src={logo} alt="logo" /></Link>
             </div>
             <button className={styles.burger} onClick={handleBurgerClick}>
                 <img src={burgerIcon} alt="Menu" />
@@ -95,7 +96,7 @@ function Menu(){
                         <li><Link to="/categorie/autres">Autres</Link></li>
                     </ul>
                     <div className={styles.logo} onClick={handleBurgerClick}>
-                        <Link to="/"><img src="./logo.png" alt="logo" /></Link>
+                        <Link to="/"><img src={logo} alt="logo" /></Link>
                     </div>
                 </div>
             )}

@@ -3,13 +3,14 @@ import { Link } from "react-router-dom"
 import styles from "./footer.module.scss";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowUpRightFromSquare} from "@fortawesome/free-solid-svg-icons";
+import logo from "../../assets/logo.png";
 
 function Footer(){
     return(
         <footer>
             <div>
                 <div className={styles.logo}>
-                    <Link to="/"><img src="/logo.png" alt="logo" /></Link>
+                    <Link to="/"><img src={logo} alt="logo" /></Link>
                 </div>
                 <div className={styles.infos}>
                     <h3>Liens utiles</h3>

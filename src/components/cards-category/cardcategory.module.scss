@@ -2,6 +2,10 @@
 
 .cardcategory{
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   width: 20rem;
   box-shadow: 6px 5px 15px 0px rgba(0,0,0,0.25);
   padding: 1rem;
@@ -35,10 +39,7 @@
 
   @include screen-sm{
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    
     width: 8rem;
 
     h4, p, legend  {

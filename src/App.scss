@@ -33,6 +33,9 @@
 
         li{
           min-width: fit-content;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           >button{
             margin: auto;
             height: 100%;
@@ -67,9 +70,11 @@
       ul {
         display: flex;
         flex-wrap: wrap;
+        flex-direction: row;
         justify-content: space-around;
         align-items: center;
         gap: 1.5rem .5rem;
+        max-height: fit-content;
 
         li{
           max-width: fit-content;

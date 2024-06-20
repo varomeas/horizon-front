@@ -1,0 +1,60 @@
+@import "../../assets/style.scss";
+
+.enTete{
+  text-align: center;
+  h1{
+    &:after{
+      content: none;
+    }
+  }
+  .DateModif{
+    font-size: 0.8em;
+    color: $gris;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+  // &:after{
+  //   content: "";
+  //   display: block;
+  //   width: 100%;
+  //   height: 5px;
+  //   background-color: $orange;
+  //   margin: 20px auto;
+  // }
+}
+
+.resume{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 1.5rem 1rem;
+  overflow: hidden;
+  color: white;
+  border-radius: 7px;
+  max-width: 25rem;
+
+
+  h3{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: .9rem;
+  }
+
+  h2{
+    color: white;
+  }
+
+  img{
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    filter: brightness(0.5); 
+  }
+
+  @include screen-sm{
+    
+  }
+}
