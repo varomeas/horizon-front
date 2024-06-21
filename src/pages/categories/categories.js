@@ -7,19 +7,51 @@ import styles from "./categories.module.scss";
 import {useContext, useEffect, useState} from "react";
 import SearchBar from "../../components/search-bar/search-bar";
 import {FontSizeContext} from "../../assets/FontSizeContext";
+import axios from "axios";
 
 const CategoryPage = () => {
     const {fontSize} = useContext(FontSizeContext);
-    const {category} = useParams();
+    const {categoryName} = useParams();
 
     const [articles, setArticles] = useState([]);
 
+    const [category, setCategory] = useState([]);
+
+    const axiosInstance = axios.create({
+        baseURL: 'http://127.0.0.1:8080/api/',
+        timeout: 5000,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    });
+
     useEffect(() => {
+        axiosInstance.get(`/categories/nom/${categoryName}`)
+            .then(response => {
+                console.log(response.data);
+                setCategory(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+        axiosInstance.get(`/categories/${category.id}/articles`)
+            .then(response => {
+                console.log(response.data);
+                setArticles(response.data)
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }, [categoryName, category.id]);
+
+   /* useEffect(() => {
         fetch('http://localhost:8080/api/articles')
             .then(response => response.json())
             .then(data => setArticles(data))
             .catch(error => console.error('Erreur:', error));
-    }, []);
+    }, []);*/
 
     for (let i = 0; i < articles.length; i++) {
 
@@ -31,19 +63,14 @@ const CategoryPage = () => {
               <SearchBar></SearchBar>
             <Carousel></Carousel>
             <main style={{fontSize: fontSize}}>
-                <h1>{category}</h1>
-                <h2>Tous nos articles de la catégorie {category}</h2>
-                {/*<div className={styles.articles}>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"Santé"} title={"Découvrez le CIUSS du Saguenay"} thumb_article={'/images/cat2.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"Alimentation"} title={"Les épiceries les moins chères du coin"} thumb_article={'/images/cat3.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"Alimentation"} title={"Les épiceries les moins chères du coin"} thumb_article={'/images/cat3.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"Alimentation"} title={"Les épiceries les moins chères du coin"} thumb_article={'/images/cat3.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"Alimentation"} title={"Les épiceries les moins chères du coin"} thumb_article={'/images/cat3.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                </div>*/}
+                <div className={styles.entete}>
+                    <h1>{category.name}</h1>
+                    <p>{category.description}</p>
+                </div>
+                <h2>Tous nos articles de la catégorie {categoryName}</h2>
                 <div className={styles.articles}>
                     {articles.map((article) => (
-                        <CardCategory key={article.id} articleId={article.id} category={article.category} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline}></CardCategory>
+                        <CardCategory key={article.id} articleId={article.id} category={category.name} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline}></CardCategory>
                     ))}
                 </div>
             </main>

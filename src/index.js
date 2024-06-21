@@ -28,7 +28,7 @@ root.render(
                 <Routes>
                     <Route path="/" element={<Layout/>}>
                         <Route path="/" element={<App />}></Route>
-                        <Route path="/categorie/:category" element={<CategoryPage />}></Route>
+                        <Route path="/categorie/:categoryName" element={<CategoryPage />}></Route>
                         <Route path={"/categorie/:category/article/:id"} element={<Article/>}></Route>
                         <Route path={"/admin"} element={<Admin/>}></Route>
                         <Route path={"/admin/edit/:id"} element={<AdminEdit/>}></Route>

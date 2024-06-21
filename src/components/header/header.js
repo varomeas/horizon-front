@@ -27,12 +27,12 @@ function Menu(){
             </div>
             <ul className={styles.menu} style={{fontSize: fontSize}}>
                 <li><Link to="/">Accueil</Link></li>
-                <li><Link to="/categorie/transport">Transport</Link></li>
-                <li><Link to="/categorie/sante">Santé</Link></li>
-                <li><Link to="/categorie/alimentation">Alimentation</Link></li>
-                <li><Link to="/categorie/loisirs">Loisirs</Link></li>
+                <li><Link to="/categorie/Transport">Transport</Link></li>
+                <li><Link to="/categorie/Santé">Santé</Link></li>
+                <li><Link to="/categorie/Alimentation">Alimentation</Link></li>
+                <li><Link to="/categorie/Loisirs">Loisirs</Link></li>
                 <li><Link to="/intergeneration">Inter-génération</Link></li>
-                <li><Link to="/categorie/autres">Autres</Link></li>
+                <li><Link to="/categorie/Autres">Autres</Link></li>
             </ul>
             <div className={styles.buttons}>
                 <Link className={`btn btn-link ${styles.urgence}`} to={"/annuaire"}>Urgence</Link>

@@ -121,30 +121,30 @@ function Admin() {
 
     const currencies = [
         {
-            value: 'Santé',
+            value: 1,
             label: 'Santé',
         },
         {
-            value: 'Transport',
+            value: 2,
             label: 'Transport',
         },
         {
-            value: 'Alimentation',
+            value: 3,
             label: 'Alimentation',
         },
         {
-            value: 'Loisirs',
+            value: 4,
             label: 'Loisirs',
         },
         {
-            value: 'Autre',
+            value: 5,
             label: 'Autre',
         },
     ];
 
     const [state, setState] = useState({
         title: "",
-        category: "",
+        category: null,
         description: "",
         content: "",
         photo: null,
@@ -177,10 +177,10 @@ function Admin() {
         formData.append('title', state.title);
         formData.append('headline', state.description);
         formData.append('author', "1");
-        formData.append('category', state.category);
+        formData.append('categoryIds', state.category);
         formData.append('content', content);
         formData.append('image', state.photo);
-        console.log(formData);
+        console.log(formData.get('categoryIds'));
         /*const dataJson = JSON.stringify({
             title: state.title,
             description: state.description,
@@ -312,7 +312,7 @@ function Admin() {
                             label="Catégorie de l'article"
                             helperText="Sélectionnez à quelle catégorie appartient l'article"
                             name={"category"}
-                            defaultValue="Santé"
+                            defaultValue="1"
                             onChange={InputChange}
                         >
                             {currencies.map((option) => (
@@ -330,6 +330,7 @@ function Admin() {
                             rows={4}
                             onChange={InputChange}
                         />
+                        <label>Ecrire ici le contenu de l'article</label>
                         <div ref={quillRef} className={"input"}>
 
                         </div>
