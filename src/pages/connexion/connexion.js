@@ -73,7 +73,7 @@ function Connexion(){
                     <form onSubmit={handleSubmit}>
                         <TextField
                             className={styles.input}
-                            label="Adresse e-mail"
+                            label="Nom d'utilisateur"
                             variant="outlined"
                             name="username"
                             type="text"
