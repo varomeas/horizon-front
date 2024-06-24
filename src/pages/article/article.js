@@ -10,15 +10,27 @@ import {FontSizeContext} from "../../assets/FontSizeContext";
 function Article() {
     const {fontSize} = useContext(FontSizeContext);
     const {id } = useParams();
+    const {category } = useParams();
 
     const [article, setArticle] = useState([]);
+    const [similarArticles, setSimilarArticles] = useState([]);
+
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/articles/${id}`)
             .then(response => response.json())
             .then(data => setArticle(data))
             .catch(error => console.error('Erreur:', error));
-    }, [id]);
+
+        fetch(`http://localhost:8080/api/categories/${1}/articles`)
+            .then(response => response.json())
+            .then(similarData => {
+                // Filtrer l'article actuel des articles similaires
+                const filteredSimilarArticles = similarData.filter(similarArticle => similarArticle.id !== article.id);
+                setSimilarArticles(filteredSimilarArticles);
+            })
+            .catch(error => console.error('Erreur:', error));
+    }, [article.id, id]);
 
     if (!article) {
         return <div>Chargement...</div>;
@@ -65,9 +77,17 @@ function Article() {
             <div className={styles.similaires}>
                 <h2>Les articles similaires</h2>
                 <div>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
+                    {similarArticles.slice(0, 3).map((similarArticle) => (
+                        <CardCategory
+                            key={similarArticle.id}
+                            category={category}
+                            title={similarArticle.title}
+                            thumb_article={similarArticle.imageUrl}
+                            date_publication={similarArticle.createdAt}
+                            description={similarArticle.headline}
+                            link={`/categorie/${category}/article/${similarArticle.id}`}
+                        />
+                    ))}
                 </div>
 
             </div>
