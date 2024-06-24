@@ -144,7 +144,7 @@ function Admin() {
 
     const [state, setState] = useState({
         title: "",
-        category: null,
+        category: 1,
         description: "",
         content: "",
         photo: null,

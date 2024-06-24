@@ -6,6 +6,7 @@ import Menu from "../../components/header/header";
 import {Box, MenuItem, TextField} from "@mui/material";
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
 import Footer from "../../components/footer/footer";
+import axios from "axios";
 
 function AdminEdit() {
     const navigate = useNavigate();
@@ -60,31 +61,33 @@ function AdminEdit() {
 
     const currencies = [
         {
-            value: 'Santé',
+            value: '1',
             label: 'Santé',
         },
         {
-            value: 'Transport',
+            value: '2',
             label: 'Transport',
         },
         {
-            value: 'Alimentation',
+            value: '3',
             label: 'Alimentation',
         },
         {
-            value: 'Loisirs',
+            value: '4',
             label: 'Loisirs',
         },
         {
-            value: 'Autre',
+            value: '5',
             label: 'Autre',
         },
     ];
 
     const [state, setState] = useState({
-        title: article.title,
-        category: article.category,
-        content: article.content,
+        title: "",
+        category: 1,
+        description: "",
+        content: "",
+        photo: null,
     });
 
 
@@ -93,6 +96,14 @@ function AdminEdit() {
         setState((prevState) => ({
             ...prevState,
             [name]: value,
+        }));
+    };
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setState((props) => ({
+            ...props,
+            photo: file,
         }));
     };
 
@@ -105,8 +116,9 @@ function AdminEdit() {
 
         const dataJson = JSON.stringify({
             title: state.title,
-            //category: state.category,
+            headline: state.description,
             content: content,
+            category: state.category,
         });
         const init = {
             method: 'PUT',
@@ -155,19 +167,21 @@ function AdminEdit() {
                     >
                         <div className={styles.formulaire}>
                             <TextField
-                                id="outlined-controlled"
-                                label="Controlled"
+                                required
+                                className={"input"}
                                 name={"title"}
-                                defaultValue={article.title}
+                                id="outlined-required"
+                                label="Titre"
                                 onChange={InputChange}
                             />
                             <TextField
+                                className={"input"}
                                 id="outlined-select-currency"
                                 select
                                 label="Catégorie de l'article"
                                 helperText="Sélectionnez à quelle catégorie appartient l'article"
                                 name={"category"}
-                                defaultValue="Santé"
+                                defaultValue="1"
                                 onChange={InputChange}
                             >
                                 {currencies.map((option) => (
@@ -177,6 +191,7 @@ function AdminEdit() {
                                 ))}
                             </TextField>
                             <TextField
+                                className={"input"}
                                 id="outlined-multiline-static"
                                 name={"description"}
                                 label="Description de l'article"
@@ -184,8 +199,16 @@ function AdminEdit() {
                                 rows={4}
                                 onChange={InputChange}
                             />
-                            <div ref={quillRef}>
+                            <div ref={quillRef} className={"input"}>
+
                             </div>
+                            <label>Ajouter une photo à l'article</label>
+                            <TextField
+                                className={"input"}
+                                type="file"
+                                name="photo"
+                                onChange={handleFileChange}
+                            />
                         </div>
                         <button className={"btn"}>Modifier l'article</button>
                     </Box>
