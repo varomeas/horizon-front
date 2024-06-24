@@ -8,6 +8,10 @@ header{
   background-color: $bleu;
   font-family: $primary-font;
   font-weight: 500;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
   ul{
     margin: auto 0 auto 0;
     li{

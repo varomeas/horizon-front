@@ -66,7 +66,7 @@ function Connexion(){
     return (
         <>
             <Menu></Menu>
-            <main>
+            <main className={styles.main}>
                 <h1>Connexion à un compte administrateur</h1>
                 <fieldset className={styles.formulaire}>
                     <h3>Connexion</h3>
