@@ -44,6 +44,16 @@ function Article() {
         image_couverture = <img src={"/images/accueil1.jpg"} alt="Cover de la catégorie"/>
     }
 
+    const date = new Date(`${article.updatedAt}`);
+    const formattedDate = date.toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
   return (
     <>
         <Menu></Menu>
@@ -55,7 +65,7 @@ function Article() {
         <main style={{fontSize: fontSize}}>
             <div className={styles.enTete}>
                 <h1>{article.title}</h1>
-                <span className={styles.DateModif}>{article.updatedAt}</span>
+                <span className={styles.DateModif}>Dernière modification : {formattedDate}</span>
             </div>
             <div dangerouslySetInnerHTML={{__html: article.content}} className={styles.contenu}>
                 {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Tincidunt nunc pulvinar sapien et. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Egestas diam in arcu cursus euismod quis. Accumsan sit amet nulla facilisi. Velit dignissim sodales ut eu. Enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique. Lobortis scelerisque fermentum dui faucibus.
