@@ -23,7 +23,7 @@ function CardCategory(props){
             <h4>{props.title}</h4>
             <p>{props.description}</p>
             <legend className={styles.date}>{props.date_publication}</legend>
-            <Link className={"btn btn-link"} to={`article/${props.articleId}`}>Lire la suite</Link>
+            <Link className={"btn btn-link"} to={props.link}>Lire la suite</Link>
         </div>
     );
 }

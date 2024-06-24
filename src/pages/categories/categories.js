@@ -70,7 +70,7 @@ const CategoryPage = () => {
                 <h2>Tous nos articles de la catégorie {categoryName}</h2>
                 <div className={styles.articles}>
                     {articles.map((article) => (
-                        <CardCategory key={article.id} articleId={article.id} category={category.name} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline}></CardCategory>
+                        <CardCategory key={article.id} articleId={article.id} category={category.name} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline} link={`article/${article.id}`}></CardCategory>
                     ))}
                 </div>
             </main>
