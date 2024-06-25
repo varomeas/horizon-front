@@ -11,6 +11,14 @@
   }
 }
 
+.main{
+  h2{
+    &:before{
+      content: none;
+    }
+  }
+}
+
 .articles{
   display: flex;
   flex-wrap: wrap;
