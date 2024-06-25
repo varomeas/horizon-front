@@ -51,6 +51,7 @@ function Connexion(){
             .then(function (data) {
                 if(data.token){
                     localStorage.setItem("token", data.token);
+                    localStorage.setItem("username", data.client.username);
                     navigate(`/admin`);
                     alert('La connexion est un succès!');
                 }
