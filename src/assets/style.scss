@@ -1,0 +1,137 @@
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background-color: #FFFBF6;
+}
+
+main{
+  margin: 0 130px 0 130px;
+}
+
+//définition des couleurs
+$bleu: #2EC4B6;
+$orange: #EBA43B;
+$jaune: #EBC83B;
+$gris: #506B68;
+
+//taille des textes
+$grand: 3rem;
+$moyen: 2rem;
+$petit: 1rem;
+
+//fonts
+@font-face {
+    font-family: 'Jost';
+    src: url('./fonts/Jost-VariableFont_wght.ttf');
+}
+
+@font-face {
+  font-family: 'Jost-Italic';
+    src: url('./fonts/Jost-Italic-VariableFont_wght.ttf');
+}
+
+$primary-font: 'Jost', sans-serif;
+$secondary-font: 'Jost-Italic', sans-serif;
+
+//taille des titres
+h1{
+  font-size: $grand;
+  font-family: $primary-font;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  /*&:after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: $orange;
+    margin: 20px auto;
+  }*/
+}
+
+h2{
+  font-size: $moyen;
+  font-family: $primary-font;
+  color: black;
+  font-weight: normal;
+  &:before{
+    content: "";
+    display: block;
+    width: 100px;
+    height: 5px;
+    background-color: #EBA43B;
+    margin-bottom: 20px;
+  }
+}
+
+.btn{
+  width: 180px;
+  height: 45px;
+  background-color: $jaune;
+  color: black;
+  border-radius: 10px;
+  border: none;
+  font-size: $petit;
+
+  &:hover{
+    background-color: $bleu;
+    cursor: pointer;
+  }
+
+  &:active{
+    background-color: $gris;
+    color: white;
+  }
+}
+
+.btn-link{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    text-decoration: none;
+    color: black;
+  }
+}
+
+a{
+  color: black;
+  &:hover{
+    color: $gris;
+    text-decoration: underline;
+  }
+}
+
+.carousel-root{
+  .carousel-slider{
+    .slide{
+      .legend{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        font-size: $moyen;
+        bottom: 0;
+        width: 30%;
+        height: 100%;
+        border-radius: 0;
+        left: 70%;
+        margin-left: 0%;
+        opacity: 1;
+        background-color: rgba(0,0,0,0.5);
+        padding: 35px;
+        text-align: left;
+        p{
+          font-family: $primary-font;
+        }
+      }
+    }
+  }
+}
+
+form{
+  .input{
+    background-color: #E9F9F8;
+  }
+}

@@ -1,0 +1,26 @@
+@import "src/assets/style.scss";
+
+.entete{
+  &:after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: $orange;
+    margin: 20px auto;
+  }
+}
+
+.main{
+  h2{
+    &:before{
+      content: none;
+    }
+  }
+}
+
+.articles{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}

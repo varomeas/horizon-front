@@ -1,0 +1,42 @@
+@import "../../assets/style.scss";
+
+.cardcategory{
+  position: relative;
+  width: 29%;
+  box-shadow: 6px 5px 15px 0px rgba(0,0,0,0.25);
+  padding: 15px;
+  margin-bottom: 20px;
+  h4{
+    text-decoration: underline;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin: 20px 0;
+  }
+  .thumb{
+    height: 310px;
+    img{
+      width: 100%;
+      height: 100%; // Ajoutez cette ligne pour que l'image prenne toute la hauteur de la div
+      object-fit: cover;
+    }
+  }
+
+  .ribbon{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $bleu;
+    color: black;
+    font-size: 1em;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding: 5px 25px 5px 25px;
+    border-radius: 0 0 15px 0;
+  }
+  .date{
+    font-size: 0.8em;
+    color: $gris;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+}
