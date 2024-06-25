@@ -66,6 +66,7 @@ function Admin() {
     const navigate = useNavigate();
     //Récupération du token
     const token = localStorage.getItem('token');
+    const user = localStorage.getItem('username');
     //vérifier que l'utilisateur est connecté
     useEffect(() => {
         if (!token) {
@@ -176,7 +177,7 @@ function Admin() {
         const formData = new FormData();
         formData.append('title', state.title);
         formData.append('headline', state.description);
-        formData.append('author', "1");
+        formData.append('author', user);
         formData.append('categoryIds', state.category);
         formData.append('content', content);
         formData.append('image', state.photo);
@@ -262,10 +263,10 @@ function Admin() {
             });
     };
     const handleLogout = () => {
-        // Supprimez le token du localStorage
         localStorage.removeItem('token');
+        localStorage.removeItem('username');
 
-        // Rechargez la page
+        // Recharge la page
         window.location.reload();
     };
 
@@ -284,7 +285,7 @@ function Admin() {
     <>
         <Menu></Menu>
         <main className={styles.admin}>
-            <h1>Bienvenue sur votre espace administrateur NOM</h1>
+            <h1>Bienvenue sur votre espace administrateur {user}</h1>
             <section>
                 <h2>Créer un nouvel article</h2>
                 <Box
