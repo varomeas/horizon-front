@@ -30,22 +30,21 @@ const CategoryPage = () => {
         axiosInstance.get(`/categories/nom/${categoryName}`)
             .then(response => {
                 console.log(response.data);
-                setCategory(response.data)
+                setCategory(response.data);
+                return response.data.id; // Retourne l'ID de la catégorie pour la prochaine requête
             })
-            .catch(error => {
-                console.error(error);
-            });
-
-        axiosInstance.get(`/categories/${category.id}/articles`)
+            .then(categoryId => {
+                // Utilise l'ID de la catégorie pour récupérer les articles de cette catégorie
+                return axiosInstance.get(`/categories/${categoryId}/articles`);
+            })
             .then(response => {
                 console.log(response.data);
-                setArticles(response.data)
+                setArticles(response.data);
             })
             .catch(error => {
                 console.error(error);
             });
-    }, [categoryName, category.id]);
-
+    }, [categoryName]);
    /* useEffect(() => {
         fetch('http://localhost:8080/api/articles')
             .then(response => response.json())
@@ -62,9 +61,9 @@ const CategoryPage = () => {
             <Menu></Menu>
               <SearchBar></SearchBar>
             <Carousel></Carousel>
-            <main style={{fontSize: fontSize}}>
+            <main style={{fontSize: fontSize}} className={styles.main}>
                 <div className={styles.entete}>
-                    <h1>{category.name}</h1>
+                    <h1>{categoryName}</h1>
                     <p>{category.description}</p>
                 </div>
                 <h2>Tous nos articles de la catégorie {categoryName}</h2>
