@@ -9,6 +9,17 @@ import Footer from "../../components/footer/footer";
 import axios from "axios";
 
 function AdminEdit() {
+
+    const axiosInstance = axios.create({
+        baseURL: 'http://127.0.0.1:8080/api/',
+        timeout: 5000,
+        headers: {
+            'Authorization': `${localStorage.getItem('token')}`,
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+        }
+    });
+
     const navigate = useNavigate();
     const {id } = useParams();
 
@@ -23,9 +34,18 @@ function AdminEdit() {
     const [article, setArticle] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/articles/${id}`)
-            .then(response => response.json())
-            .then(data => setArticle(data))
+        axiosInstance.get(`/articles/${id}`)
+            .then(response => {
+                const data = response.data;
+                setArticle(data);
+                setState({
+                    title: data.title || '',
+                    description: data.headline || '',
+                    category: 1,
+                    content: data.content || '',
+                    photo: null,
+                });
+            })
             .catch(error => console.error('Erreur:', error));
     }, [id]);
 
@@ -83,10 +103,10 @@ function AdminEdit() {
     ];
 
     const [state, setState] = useState({
-        title: "",
+        title: '',
         category: 1,
-        description: "",
-        content: "",
+        description: '',
+        content: '',
         photo: null,
     });
 
@@ -107,24 +127,49 @@ function AdminEdit() {
         }));
     };
 
+    let user = localStorage.getItem('username');
 
     const formSubmit = (event) => {
         event.preventDefault();
 
         const champsQuill = quillInstanceRef.current;
-        const content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
+        let content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
+        const trimmedContent = content.replace(/\s/g, '');
 
-        const dataJson = JSON.stringify({
+        // Vérifie si le contenu ne contient que des balises <p> vides
+        if (/^<p><\/p>$/.test(trimmedContent)) {
+            content = article.content;
+        }
+        const formData = new FormData();
+        formData.append('title', state.title);
+        formData.append('headline', state.description);
+        formData.append('categoryIds', state.category);
+        formData.append('content', content);
+        formData.append('image', state.photo);
+
+        axiosInstance.put(`/articles/${id}`, formData)
+            .then(response => {
+                console.log(response.data);
+                alert('Article créé avec succès');
+                navigate('/categorie/Transport/article/' + article.id)
+            })
+            .catch(error => {
+
+                console.error(error);
+                alert("Erreur, la création de l'article n'a pas fonctionné")
+            });
+        /*const dataJson = JSON.stringify({
             title: state.title,
             headline: state.description,
             content: content,
-            category: state.category,
+            categoryIds: state.category,
+            image: state.photo
         });
         const init = {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                'Content-Type': 'multipart/form-data',
                 'Authorization': `${token}`,
             },
             body: dataJson
@@ -146,14 +191,14 @@ function AdminEdit() {
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            });*/
 
     }
     return (
         <>
             <Menu></Menu>
             <main className={styles.admin}>
-                <h1>Espace administrateur de NOM</h1>
+                <h1>Espace administrateur de {user}</h1>
                 <section>
                     <h2>Modifier un article</h2>
                     <Box
