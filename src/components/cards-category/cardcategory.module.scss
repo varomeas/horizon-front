@@ -2,13 +2,10 @@
 
 .cardcategory{
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  width: 20rem;
+  width: 29%;
   box-shadow: 6px 5px 15px 0px rgba(0,0,0,0.25);
-  padding: 1rem;
+  padding: 15px;
+  margin-bottom: 20px;
   h4{
     text-decoration: underline;
     font-size: 1.5em;
@@ -30,10 +27,10 @@
     left: 0;
     background-color: $bleu;
     color: black;
-    font-size: 1rem;
+    font-size: 1em;
     font-weight: 500;
     text-transform: uppercase;
-    padding: .5rem 2rem;
+    padding: 5px 25px 5px 25px;
     border-radius: 0 0 15px 0;
   }
   .date{
@@ -41,33 +38,5 @@
     color: $gris;
     font-style: italic;
     margin-bottom: 20px;
-  }
-
-  @include screen-sm{
-
-    
-    width: 8rem;
-
-    h4, p, legend  {
-      display: none;
-    }
-
-    .ribbon{
-      border-radius: 0 0 15px 15px;
-      font-size: .9rem;
-      text-align: center;
-      right: -.5rem;
-      left: -.5rem;
-      padding: .5rem 0;
-    }
-
-    a{
-      font-size: .9rem;
-      width: 7rem;
-      padding: .5rem;
-      text-align: center;
-    }
-
-    
   }
 }

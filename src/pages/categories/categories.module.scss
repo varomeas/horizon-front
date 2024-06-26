@@ -1,47 +1,26 @@
-@import "../../assets/style.scss";
+@import "src/assets/style.scss";
 
-main{
-  margin: 1rem 2rem;
-
-  h1{
-    text-transform: capitalize;
-    @include screen-sm{
-      font-size: 2.5rem;
-    }
+.entete{
+  &:after{
+    content: "";
+    display: block;
+    width: 100%;
+    height: 5px;
+    background-color: $orange;
+    margin: 20px auto;
   }
-  
+}
+
+.main{
   h2{
-    @include screen-sm{
-      font-size: 1.4rem ;
-    }
     &:before{
       content: none;
     }
   }
-  
-  .entete{
-    &:after{
-      content: "";
-      display: block;
-      width: 100%;
-      height: 5px;
-      background-color: $orange;
-      margin: 20px auto;
-    }
-  }
+}
 
-  .articles{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-    max-height: fit-content;
-  }
-  
-  /*.articles{
+.articles{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  }*/
 }
-

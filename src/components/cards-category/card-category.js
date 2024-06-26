@@ -39,7 +39,6 @@ function CardCategory(props){
             <div className={styles.ribbon}>
                 <span>{props.category}</span>
             </div>
-            <img src={props.thumb_article} alt="Image de la catégorie"/>
             <div className={styles.thumb}>
                 {image_couverture}
             </div>

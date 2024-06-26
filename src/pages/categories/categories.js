@@ -2,7 +2,7 @@ import {useParams} from "react-router-dom";
 import Menu from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import Carousel from "../../components/carousel/carousel";
-import ArticleResume from "../../components/article-resume/article-resume";
+import CardCategory from "../../components/cards-category/card-category";
 import styles from "./categories.module.scss";
 import {useContext, useEffect, useState} from "react";
 import SearchBar from "../../components/search-bar/search-bar";
@@ -61,32 +61,17 @@ const CategoryPage = () => {
             <Menu></Menu>
               <SearchBar></SearchBar>
             <Carousel></Carousel>
-           {/* <main>
-                <h1>{category}</h1>
-                <h2>Tous nos articles de la catégorie {category}</h2>
-                <ul className={styles.articles}>
-                    {articles.map((article) => (
-                        <li>
-                           <ArticleResume key={article.id} articleId={article.id} category={article.category} title={article.title} imageUrl={article.imageUrl} date_publication={article.createdAt} description={article.description}></ArticleResume>
-                        </li>
-                     ))}
-                </ul>
-                </main>*/}
-
             <main style={{fontSize: fontSize}} className={styles.main}>
                 <div className={styles.entete}>
                     <h1>{categoryName}</h1>
                     <p>{category.description}</p>
                 </div>
                 <h2>Tous nos articles de la catégorie {categoryName}</h2>
-                <ul className={styles.articles}>
-                      {articles.map((article) => (
-                          {/*<CardCategory key={article.id} articleId={article.id} category={category.name} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline} link={`article/${article.id}`}></CardCategory>*/}
-                        <li>
-                          <ArticleResume key={article.id} articleId={article.id} category={article.category} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.description}></ArticleResume>
-                        </li>
-                      ))}
-                </ul>
+                <div className={styles.articles}>
+                    {articles.map((article) => (
+                        <CardCategory key={article.id} articleId={article.id} category={category.name} title={article.title} thumb_article={article.imageUrl} date_publication={article.createdAt} description={article.headline} link={`article/${article.id}`}></CardCategory>
+                    ))}
+                </div>
             </main>
             <Footer></Footer>
           </>
