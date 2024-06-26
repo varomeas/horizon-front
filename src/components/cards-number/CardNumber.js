@@ -13,11 +13,11 @@ function CardNumber(props){
     return(
         <div className={`${styles.card} ${props.className}`}>
             <div className={styles.thumb}>
-                <img src={props.url_image} alt={"Plouf"}/>
+                <img src={props.url_image} alt={props.titre}/>
             </div>
             <div className={styles.infos}>
                 <h3><strong>{props.numero}</strong> - {props.titre}</h3>
-                <p>{props.description}</p>
+                <p className={styles.description}>{props.description}</p>
 
                 {props.adresse ? <p>Adresse : <strong>{props.adresse}</strong></p> : null}
                 <div className={styles.action}>

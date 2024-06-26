@@ -1,3 +1,6 @@
+@forward 'reset';
+@forward 'mixins';
+
 body{
   margin: 0;
   padding: 0;
@@ -6,7 +9,7 @@ body{
 }
 
 main{
-  margin: 0 130px 0 130px;
+  margin: 0 130px;
 }
 
 //définition des couleurs
