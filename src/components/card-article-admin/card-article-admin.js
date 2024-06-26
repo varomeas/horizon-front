@@ -19,7 +19,7 @@ function AdminArticle(props){
                 <p>{props.description}</p>
                 {/*<legend className={styles.date}>{props.date_publication}</legend>*/}
                 <div className={styles.actions}>
-                    <Link className={styles.iconAction} to={`article/${props.id}`}><FontAwesomeIcon icon={faEye} size={"xl"}/></Link>
+                    <Link className={styles.iconAction} to={`/categorie/transport/article/${props.id}`}><FontAwesomeIcon icon={faEye} size={"xl"}/></Link>
                     <Link className={styles.iconAction} to={`edit/${props.id}`}><FontAwesomeIcon icon={faPen} size={"xl"}/></Link>
                     <a className={styles.iconAction} onClick={handleDelete} href={"#"}><FontAwesomeIcon icon={faTrashCan} style={{color: "#e32400",}} size={"xl"}/></a>
                 </div>

@@ -31,6 +31,8 @@ function Menu(){
         setShowMenu(false);
     };
 
+    const {fontSize} = useContext(FontSizeContext);
+
     return(
         <header>
             <div className={styles.logo}>
@@ -39,27 +41,25 @@ function Menu(){
             <button className={styles.burger} onClick={handleBurgerClick}>
                 <img src={burgerIcon} alt="Menu" />
             </button>
-            <ul className={styles.menu}>
+            <ul className={styles.menu} style={{fontSize: fontSize}}>
                 <li><Link to="/">Accueil</Link></li>
-                <li><Link to="/categorie/transport">Transport</Link></li>
-                <li><Link to="/categorie/sante">Santé</Link></li>
-                <li><Link to="/categorie/alimentation">Alimentation</Link></li>
-                <li><Link to="/categorie/loisirs">Loisirs</Link></li>
-                <li><Link to="/link6">Inter-génération</Link></li>
-                <li><Link to="/categorie/autres">Autres</Link></li>
+                <li><Link to="/categorie/Transport">Transport</Link></li>
+                <li><Link to="/categorie/Santé">Santé</Link></li>
+                <li><Link to="/categorie/Alimentation">Alimentation</Link></li>
+                <li><Link to="/categorie/Loisirs">Loisirs</Link></li>
+                <li><Link to="/intergeneration">Inter-génération</Link></li>
+                <li><Link to="/categorie/Autres">Autres</Link></li>
             </ul>
             <div className={styles.buttons}>
-                <button className={"btn"}>
-                    <Link to="/annuaire">Services d'urgence</Link>
-                </button>
-                <button className={"btn"} onClick={handleAccessibilityClick}>Accessibilité</button>
-                {showMenu && (
+                <Link className={`btn btn-link ${styles.urgence}`} to={"/annuaire"}>Urgence</Link>
+                {/*<button className={"btn"} onClick={handleAccessibilityClick}>Accessibilité</button>
+                {showMenu && (*/}
                     <div className={styles.accessibilite_menu}>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('small')}>Petit</button>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('medium')}>Moyen</button>
-                        <button className={"btn"} onClick={() => handleFontSizeClick('large')}>Grand</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('medium')}>Petit</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('large')}>Moyen</button>
+                        <button className={"btn"} onClick={() => handleFontSizeClick('x-large')}>Grand</button>
                     </div>
-                )}
+                {/*)}*/}
             </div>
             <div className={styles.buttonsTel}>
             <button className={"btn"}>

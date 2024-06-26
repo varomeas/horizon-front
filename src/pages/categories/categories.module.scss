@@ -14,6 +14,20 @@ main{
     @include screen-sm{
       font-size: 1.4rem ;
     }
+    &:before{
+      content: none;
+    }
+  }
+  
+  .entete{
+    &:after{
+      content: "";
+      display: block;
+      width: 100%;
+      height: 5px;
+      background-color: $orange;
+      margin: 20px auto;
+    }
   }
 
   .articles{
@@ -23,10 +37,11 @@ main{
     width: 100%;
     max-height: fit-content;
   }
-}
-
-.articles{
+  
+  /*.articles{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  }*/
 }
+

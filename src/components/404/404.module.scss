@@ -1,0 +1,17 @@
+.notfound{
+  text-align: center;
+  margin: 20px 0;
+  h1{
+    font-size: 200px;
+    margin: 0;
+    &::after{
+      content: none;
+    }
+  }
+  p{
+    font-size: 20px;
+    margin: 0;
+    text-align: center;
+    margin: 20px 0;
+  }
+}

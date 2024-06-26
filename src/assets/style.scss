@@ -5,6 +5,7 @@ body{
   margin: 0;
   padding: 0;
   font-family: 'Helvetica Neue', sans-serif;
+  background-color: #FFFBF6;
 }
 
 main{
@@ -18,7 +19,7 @@ $jaune: #EBC83B;
 $gris: #506B68;
 
 //taille des textes
-$grand: 4rem;
+$grand: 3rem;
 $moyen: 2rem;
 $petit: 1rem;
 
@@ -43,14 +44,14 @@ h1{
   font-weight: bold;
   color: black;
   text-align: center;
-  &:after{
+  /*&:after{
     content: "";
     display: block;
     width: 100%;
     height: 5px;
     background-color: $orange;
     margin: 20px auto;
-  }
+  }*/
 }
 
 h2{
@@ -58,6 +59,14 @@ h2{
   font-family: $primary-font;
   color: black;
   font-weight: normal;
+  &:before{
+    content: "";
+    display: block;
+    width: 100px;
+    height: 5px;
+    background-color: #EBA43B;
+    margin-bottom: 20px;
+  }
 }
 
 .btn{
@@ -121,5 +130,11 @@ a{
         }
       }
     }
+  }
+}
+
+form{
+  .input{
+    background-color: #E9F9F8;
   }
 }

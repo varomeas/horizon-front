@@ -3,32 +3,70 @@ import Footer from "../../components/footer/footer";
 import styles from "./article.module.scss";
 import CardCategory from "../../components/cards-category/card-category";
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
+import SearchBar from "../../components/search-bar/search-bar";
+import {FontSizeContext} from "../../assets/FontSizeContext";
 
 function Article() {
+    const {fontSize} = useContext(FontSizeContext);
     const {id } = useParams();
+    const {category } = useParams();
 
     const [article, setArticle] = useState([]);
+    const [similarArticles, setSimilarArticles] = useState([]);
+
 
     useEffect(() => {
         fetch(`http://localhost:8080/api/articles/${id}`)
             .then(response => response.json())
             .then(data => setArticle(data))
             .catch(error => console.error('Erreur:', error));
-    }, [id]);
+
+        fetch(`http://localhost:8080/api/categories/${1}/articles`)
+            .then(response => response.json())
+            .then(similarData => {
+                // Filtrer l'article actuel des articles similaires
+                const filteredSimilarArticles = similarData.filter(similarArticle => similarArticle.id !== article.id);
+                setSimilarArticles(filteredSimilarArticles);
+            })
+            .catch(error => console.error('Erreur:', error));
+    }, [article.id, id]);
 
     if (!article) {
         return <div>Chargement...</div>;
     }
 
+    let image_couverture;
+    if(article.imageUrl){
+        image_couverture = <img src={`http://localhost:8080${article.imageUrl}`} alt="Image de la catégorie" width={"100%"}/>
+    }
+    else {
+        image_couverture = <img src={"/images/accueil1.jpg"} alt="Cover de la catégorie"/>
+    }
+
+    const date = new Date(`${article.updatedAt}`);
+    const formattedDate = date.toLocaleDateString('fr-FR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    });
+
   return (
     <>
         <Menu></Menu>
-        <img src={"/images/carousel1.jpg"} alt="Image de la catégorie" width={"100%"}/>
-        <main>
+        <SearchBar></SearchBar>
+        <div className={styles.image_couverture}>
+            {image_couverture}
+        </div>
+
+        <main style={{fontSize: fontSize}}>
             <div className={styles.enTete}>
                 <h1>{article.title}</h1>
-                <span className={styles.DateModif}>{article.updatedAt}</span>
+                <span className={styles.DateModif}>Dernière modification : {formattedDate}</span><br/>
+                <span className={styles.DateModif}>Ecrit par : {article.author}</span>
             </div>
             <div dangerouslySetInnerHTML={{__html: article.content}} className={styles.contenu}>
                 {/*<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Tincidunt nunc pulvinar sapien et. Ipsum nunc aliquet bibendum enim facilisis gravida neque convallis. Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at augue eget. Egestas diam in arcu cursus euismod quis. Accumsan sit amet nulla facilisi. Velit dignissim sodales ut eu. Enim lobortis scelerisque fermentum dui faucibus in ornare quam viverra. Elit scelerisque mauris pellentesque pulvinar pellentesque habitant morbi tristique. Lobortis scelerisque fermentum dui faucibus.
@@ -50,9 +88,17 @@ function Article() {
             <div className={styles.similaires}>
                 <h2>Les articles similaires</h2>
                 <div>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
-                    <CardCategory category={"transports"} title={"Les nouveaux trajets de la STS"} thumb_article={'/images/cat1.png'} date_publication={"Le 10 mai 2024"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris at leo odio. Nulla tellus elit, accumsan tincidunt urna ut, condimentum aliquet erat. Donec aliquam, libero sit amet molestie malesuada, sem tellus euismod mauris, in vulputate arcu sapien sed sapien."}></CardCategory>
+                    {similarArticles.slice(0, 3).map((similarArticle) => (
+                        <CardCategory
+                            key={similarArticle.id}
+                            category={category}
+                            title={similarArticle.title}
+                            thumb_article={similarArticle.imageUrl}
+                            date_publication={similarArticle.createdAt}
+                            description={similarArticle.headline}
+                            link={`/categorie/${category}/article/${similarArticle.id}`}
+                        />
+                    ))}
                 </div>
 
             </div>

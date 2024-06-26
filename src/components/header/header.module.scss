@@ -11,6 +11,10 @@ header{
   padding: 1.5rem;
   gap:1rem;
   max-height: 100vh;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
   
   .menu{
     display: flex;
@@ -26,30 +30,45 @@ header{
   }
 
   .buttons{
-    display: flex;
-    margin: auto;
-    width: fit-content;
-    align-items: center;
-    justify-content: end;
-    font-size: $petit;
-    >button:first-child{
-      width: 190px;
-      margin-right: 25px;
+    margin: auto 0 auto 0;
+    .urgence{
+      width: 195px;
+      font-size: $petit;
       background-color: $orange;
       text-transform: uppercase;
     }
-    >button:nth-child(2){
+    /*>button:nth-child(2){
       width: 110px;
       background: none;
       border: solid 1px black;
-    }
-  
+    }*/
     .accessibilite_menu{
-      position: absolute;
+      /*position: absolute;
       background-color: white;
       border: solid 1px black;
       border-radius: 10px;
-      padding: 20px;
+      padding: 20px;*/
+      display: flex;
+      margin-top: 5px;
+      button{
+        width: 110px;
+        font-size: $petit;
+        background: none;
+        border: solid 1px black;
+        margin-right: 10px;
+      }
+      button:first-child{
+        font-size: 0.5em;
+        width: 20%;
+      }
+      button:nth-child(2){
+        font-size: $petit;
+        width: 30%;
+      }
+      button:last-child{
+        font-size: 1.5em;
+        width: 49%;
+      }
     }
   }
   .buttonsTel, .burger{

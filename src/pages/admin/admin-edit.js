@@ -6,16 +6,46 @@ import Menu from "../../components/header/header";
 import {Box, MenuItem, TextField} from "@mui/material";
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
 import Footer from "../../components/footer/footer";
+import axios from "axios";
 
 function AdminEdit() {
+
+    const axiosInstance = axios.create({
+        baseURL: 'http://127.0.0.1:8080/api/',
+        timeout: 5000,
+        headers: {
+            'Authorization': `${localStorage.getItem('token')}`,
+            'Content-Type': 'multipart/form-data',
+            'Accept': 'application/json',
+        }
+    });
+
+    const navigate = useNavigate();
     const {id } = useParams();
+
+    const token = localStorage.getItem('token');
+    //vérifier que l'utilisateur est connecté
+    useEffect(() => {
+        if (!token) {
+            navigate('/connexion_admin');
+        }
+    }, [navigate]);
 
     const [article, setArticle] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:8080/api/articles/${id}`)
-            .then(response => response.json())
-            .then(data => setArticle(data))
+        axiosInstance.get(`/articles/${id}`)
+            .then(response => {
+                const data = response.data;
+                setArticle(data);
+                setState({
+                    title: data.title || '',
+                    description: data.headline || '',
+                    category: 1,
+                    content: data.content || '',
+                    photo: null,
+                });
+            })
             .catch(error => console.error('Erreur:', error));
     }, [id]);
 
@@ -48,34 +78,36 @@ function AdminEdit() {
     }, []);
 
 
-    const navigate = useNavigate();
+
     const currencies = [
         {
-            value: 'Santé',
+            value: '1',
             label: 'Santé',
         },
         {
-            value: 'Transport',
+            value: '2',
             label: 'Transport',
         },
         {
-            value: 'Alimentation',
+            value: '3',
             label: 'Alimentation',
         },
         {
-            value: 'Loisirs',
+            value: '4',
             label: 'Loisirs',
         },
         {
-            value: 'Autre',
+            value: '5',
             label: 'Autre',
         },
     ];
 
     const [state, setState] = useState({
-        title: article.title,
-        category: article.category,
-        content: article.content,
+        title: '',
+        category: 1,
+        description: '',
+        content: '',
+        photo: null,
     });
 
 
@@ -87,23 +119,58 @@ function AdminEdit() {
         }));
     };
 
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setState((props) => ({
+            ...props,
+            photo: file,
+        }));
+    };
+
+    let user = localStorage.getItem('username');
 
     const formSubmit = (event) => {
         event.preventDefault();
 
         const champsQuill = quillInstanceRef.current;
-        const content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
+        let content = champsQuill.getSemanticHTML(0, champsQuill.getLength());
+        const trimmedContent = content.replace(/\s/g, '');
 
-        const dataJson = JSON.stringify({
+        // Vérifie si le contenu ne contient que des balises <p> vides
+        if (/^<p><\/p>$/.test(trimmedContent)) {
+            content = article.content;
+        }
+        const formData = new FormData();
+        formData.append('title', state.title);
+        formData.append('headline', state.description);
+        formData.append('categoryIds', state.category);
+        formData.append('content', content);
+        formData.append('image', state.photo);
+
+        axiosInstance.put(`/articles/${id}`, formData)
+            .then(response => {
+                console.log(response.data);
+                alert('Article créé avec succès');
+                navigate('/categorie/Transport/article/' + article.id)
+            })
+            .catch(error => {
+
+                console.error(error);
+                alert("Erreur, la création de l'article n'a pas fonctionné")
+            });
+        /*const dataJson = JSON.stringify({
             title: state.title,
-            //category: state.category,
+            headline: state.description,
             content: content,
+            categoryIds: state.category,
+            image: state.photo
         });
         const init = {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `${token}`,
             },
             body: dataJson
         };
@@ -111,11 +178,11 @@ function AdminEdit() {
         fetch(`http://127.0.0.1:8080/api/articles/${id}`, init)
             .then((response) => {
                 if(response.status === 200){
-                    alert('Article créé avec succès');
+                    alert('Article modifié avec succès');
                     //let data = response.json();
                 }
                 else{
-                    alert("Erreur, la création de l'article n'a pas fonctionné")
+                    alert("Erreur, la modification de l'article n'a pas fonctionné")
                 }
                 return response.json();
             })
@@ -124,14 +191,14 @@ function AdminEdit() {
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            });*/
 
     }
     return (
         <>
             <Menu></Menu>
             <main className={styles.admin}>
-                <h1>Espace administrateur de NOM</h1>
+                <h1>Espace administrateur de {user}</h1>
                 <section>
                     <h2>Modifier un article</h2>
                     <Box
@@ -145,18 +212,21 @@ function AdminEdit() {
                     >
                         <div className={styles.formulaire}>
                             <TextField
-                                id="outlined-controlled"
-                                label="Controlled"
-                                defaultValue={article.title}
+                                required
+                                className={"input"}
+                                name={"title"}
+                                id="outlined-required"
+                                label="Titre"
                                 onChange={InputChange}
                             />
                             <TextField
+                                className={"input"}
                                 id="outlined-select-currency"
                                 select
                                 label="Catégorie de l'article"
                                 helperText="Sélectionnez à quelle catégorie appartient l'article"
                                 name={"category"}
-                                defaultValue="Santé"
+                                defaultValue="1"
                                 onChange={InputChange}
                             >
                                 {currencies.map((option) => (
@@ -166,6 +236,7 @@ function AdminEdit() {
                                 ))}
                             </TextField>
                             <TextField
+                                className={"input"}
                                 id="outlined-multiline-static"
                                 name={"description"}
                                 label="Description de l'article"
@@ -173,8 +244,16 @@ function AdminEdit() {
                                 rows={4}
                                 onChange={InputChange}
                             />
-                            <div ref={quillRef}>
+                            <div ref={quillRef} className={"input"}>
+
                             </div>
+                            <label>Ajouter une photo à l'article</label>
+                            <TextField
+                                className={"input"}
+                                type="file"
+                                name="photo"
+                                onChange={handleFileChange}
+                            />
                         </div>
                         <button className={"btn"}>Modifier l'article</button>
                     </Box>

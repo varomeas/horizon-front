@@ -2,9 +2,6 @@
 
 
 .App{
-  .search-bar{
-    height: 100px;
-  }
 
 
   main{
@@ -42,6 +39,15 @@
             padding: 1rem .5rem;
           }
         }
+        .card{
+          width: calc(50% - 62px);
+          &:nth-child(2n){
+            margin: 15px 0 15px 15px;
+          }
+        }
+        .lien_annuaire{
+          margin: auto;
+        }
       }
     }
     .présentation{
@@ -69,6 +75,7 @@
       margin-bottom: 2rem;
       ul {
         display: flex;
+        justify-content: space-evenly;
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: space-around;

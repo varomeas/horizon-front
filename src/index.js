@@ -15,6 +15,10 @@ import Admin from "./pages/admin/admin";
 import {FontSizeProvider} from "./assets/FontSizeContext";
 import AdminEdit from "./pages/admin/admin-edit";
 import Annuaire from "./pages/annuaire/annuaire";
+import Connexion from "./pages/connexion/connexion";
+import PrivateRoute from "./components/PrivateRoute";
+import Intergeneration from "./pages/intergeneration/intergeneration";
+import NotFound from "./components/404/404";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -24,11 +28,14 @@ root.render(
                 <Routes>
                     <Route path="/" element={<Layout/>}>
                         <Route path="/" element={<App />}></Route>
-                        <Route path="/categorie/:category" element={<CategoryPage />}></Route>
+                        <Route path="/categorie/:categoryName" element={<CategoryPage />}></Route>
                         <Route path={"/categorie/:category/article/:id"} element={<Article/>}></Route>
                         <Route path={"/admin"} element={<Admin/>}></Route>
                         <Route path={"/admin/edit/:id"} element={<AdminEdit/>}></Route>
                         <Route path={"/annuaire"} element={<Annuaire/>}></Route>
+                        <Route path={"/connexion_admin"} element={<Connexion/>}></Route>
+                        <Route path={"/intergeneration"} element={<Intergeneration/>}></Route>
+                        <Route path='*' element={<NotFound />}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
