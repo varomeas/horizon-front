@@ -69,7 +69,6 @@ function AdminEdit() {
                         ['clean']
                     ]
                 },
-                // Ajoutez d'autres options ici si nécessaire
             });
             quillInstanceRef.current = quill;
             quill.setContents([

@@ -16,14 +16,14 @@ function SearchBar() {
 
         function handleClickOutside(event) {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
-                setInputText(''); // Réinitialisez inputText si le clic a eu lieu en dehors de la barre de recherche
+                setInputText(''); // Réinitialise inputText si le clic a eu lieu en dehors de la barre de recherche
             }
         }
 
-        // Ajoutez le gestionnaire d'événements de clic au document
+        // Ajout du gestionnaire d'événements de clic au document
         document.addEventListener('mousedown', handleClickOutside);
 
-        // Supprimez le gestionnaire d'événements de clic du document lorsque le composant est démonté
+        // Supprission du gestionnaire d'événements de clic du document lorsque le composant est démonté
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
