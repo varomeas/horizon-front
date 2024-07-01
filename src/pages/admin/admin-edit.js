@@ -1,15 +1,17 @@
+// Importation des dépendances nécessaires
 import styles from "./admin.module.scss";
 import {useEffect, useRef, useState} from "react";
-import Quill from "quill";
-import {useNavigate, useParams} from "react-router-dom";
+import Quill from "quill"; // Éditeur de texte riche
+import {useNavigate, useParams} from "react-router-dom"; // Gestion de la navigation et des paramètres d'URL
 import Menu from "../../components/header/header";
-import {Box, MenuItem, TextField} from "@mui/material";
+import {Box, MenuItem, TextField} from "@mui/material"; // Composants Material-UI
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
 import Footer from "../../components/footer/footer";
-import axios from "axios";
+import axios from "axios"; // Client HTTP basé sur les promesses
 
 function AdminEdit() {
 
+    // Création d'une instance d'axios avec une configuration par défaut
     const axiosInstance = axios.create({
         baseURL: 'http://127.0.0.1:8080/api/',
         timeout: 5000,
@@ -20,25 +22,27 @@ function AdminEdit() {
         }
     });
 
-    const navigate = useNavigate();
-    const {id } = useParams();
+    const navigate = useNavigate(); // Fonction pour naviguer entre les routes
+    const {id } = useParams(); // Récupération de l'ID de l'article à partir des paramètres d'URL
 
-    const token = localStorage.getItem('token');
-    //vérifier que l'utilisateur est connecté
+    const token = localStorage.getItem('token'); // Récupération du token de l'utilisateur à partir du stockage local
+
+    // Vérification que l'utilisateur est connecté
     useEffect(() => {
         if (!token) {
-            navigate('/connexion_admin');
+            navigate('/connexion_admin'); // Redirection vers la page de connexion si l'utilisateur n'est pas connecté
         }
     }, [navigate]);
 
-    const [article, setArticle] = useState([]);
+    const [article, setArticle] = useState([]); // État pour stocker les données de l'article
 
+    // Récupération des données de l'article à partir de l'API lors du chargement du composant
     useEffect(() => {
         axiosInstance.get(`/articles/${id}`)
             .then(response => {
                 const data = response.data;
-                setArticle(data);
-                setState({
+                setArticle(data); // Mise à jour de l'état de l'article avec les données récupérées
+                setState({ // Mise à jour de l'état du formulaire avec les données de l'article
                     title: data.title || '',
                     description: data.headline || '',
                     category: 1,
@@ -46,13 +50,15 @@ function AdminEdit() {
                     photo: null,
                 });
             })
-            .catch(error => console.error('Erreur:', error));
+            .catch(error => console.error('Erreur:', error)); // Gestion des erreurs
     }, [id]);
 
-    const quillInstanceRef = useRef(null);
-    const quillRef = useRef(null); // Crée une référence pour stocker l'éditeur Quill
+    const quillInstanceRef = useRef(null); // Référence pour stocker l'instance de Quill
+    const quillRef = useRef(null); // Référence pour stocker l'éditeur Quill
 
-    const textContenu = article.content;
+    const textContenu = article.content; // Contenu de l'article
+
+    // Initialisation de l'éditeur Quill lors du chargement du composant
     useEffect(() => {
         if (quillRef.current) {
             const quill = new Quill(quillRef.current, {
@@ -70,14 +76,14 @@ function AdminEdit() {
                     ]
                 },
             });
-            quillInstanceRef.current = quill;
+            quillInstanceRef.current = quill; // Stockage de l'instance de Quill
             quill.setContents([
-                { insert: textContenu }
-            ]);        }
+                { insert: textContenu } // Insertion du contenu de l'article dans l'éditeur
+            ]);
+        }
     }, []);
 
-
-
+    // Options pour le champ de sélection de la catégorie
     const currencies = [
         {
             value: '1',
@@ -101,6 +107,7 @@ function AdminEdit() {
         },
     ];
 
+    // État pour stocker les valeurs du formulaire
     const [state, setState] = useState({
         title: '',
         category: 1,
@@ -109,7 +116,7 @@ function AdminEdit() {
         photo: null,
     });
 
-
+    // Gestionnaire d'événements pour les changements de valeur des champs du formulaire
     const InputChange = (event) => {
         const { name, value } = event.target;
         setState((prevState) => ({
@@ -118,6 +125,7 @@ function AdminEdit() {
         }));
     };
 
+    // Gestionnaire d'événements pour le changement de fichier
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setState((props) => ({
@@ -126,8 +134,9 @@ function AdminEdit() {
         }));
     };
 
-    let user = localStorage.getItem('username');
+    let user = localStorage.getItem('username'); // Récupération du nom d'utilisateur à partir du stockage local
 
+    // Gestionnaire d'événements pour la soumission du formulaire
     const formSubmit = (event) => {
         event.preventDefault();
 
@@ -146,6 +155,7 @@ function AdminEdit() {
         formData.append('content', content);
         formData.append('image', state.photo);
 
+        // Envoi des données du formulaire à l'API
         axiosInstance.put(`/articles/${id}`, formData)
             .then(response => {
                 console.log(response.data);
@@ -157,42 +167,9 @@ function AdminEdit() {
                 console.error(error);
                 alert("Erreur, la création de l'article n'a pas fonctionné")
             });
-        /*const dataJson = JSON.stringify({
-            title: state.title,
-            headline: state.description,
-            content: content,
-            categoryIds: state.category,
-            image: state.photo
-        });
-        const init = {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `${token}`,
-            },
-            body: dataJson
-        };
-        console.log(init)
-        fetch(`http://127.0.0.1:8080/api/articles/${id}`, init)
-            .then((response) => {
-                if(response.status === 200){
-                    alert('Article modifié avec succès');
-                    //let data = response.json();
-                }
-                else{
-                    alert("Erreur, la modification de l'article n'a pas fonctionné")
-                }
-                return response.json();
-            })
-            .then(function (data) {
-                navigate(`/categorie/transport/article/${id}`)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });*/
-
     }
+
+    // Rendu du composant
     return (
         <>
             <Menu></Menu>

@@ -1,25 +1,31 @@
+// Importation des dépendances nécessaires
 import styles from "./cardcategory.module.scss";
 import {Link} from "react-router-dom";
-import {TRUE} from "sass";
 
+// Définition du composant CardCategory
 function CardCategory(props){
-    const serverUrl = 'http://localhost:8080'; // Remplacez par l'URL de votre serveur
+    // URL du serveur
+    const serverUrl = 'http://localhost:8080';
+    // Construction de l'URL de l'image
     const imageUrl = `${serverUrl}${props.thumb_article}`;
 
     let image_couverture;
+    // Si la propriété 'cat' est vraie, on utilise l'URL de l'image telle quelle
     if(props.cat){
         image_couverture = <img src={props.thumb_article} alt="Cover de la catégorie"/>
     }
     else {
-
+        // Si une image de couverture est fournie, on utilise l'URL du serveur
         if(props.thumb_article){
             image_couverture = <img src={imageUrl} alt="Cover de la catégorie"/>
         }
+        // Sinon, on utilise une image par défaut
         else {
             image_couverture = <img src={"/images/accueil1.jpg"} alt="Cover de la catégorie"/>
         }
     }
 
+    // Formatage de la date de publication si elle est fournie
     let formattedDate;
     if (props.date_publication) {
         const date = new Date(`${props.date_publication}`);
@@ -33,7 +39,7 @@ function CardCategory(props){
         });
     }
 
-
+    // Rendu du composant
     return (
         <div className={styles.cardcategory}>
             <div className={styles.ribbon}>
@@ -50,4 +56,5 @@ function CardCategory(props){
     );
 }
 
+// Exportation du composant
 export default CardCategory

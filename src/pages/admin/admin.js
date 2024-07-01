@@ -1,3 +1,4 @@
+// Importation des dépendances nécessaires
 import Menu from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import styles from "./admin.module.scss";
@@ -10,9 +11,9 @@ import {globalRegistry} from "quill/core/quill";
 import AdminArticle from "../../components/card-article-admin/card-article-admin";
 import axios from "axios";
 
-
-
+// Définition du composant Admin
 function Admin() {
+    // Création d'une instance d'axios avec une configuration par défaut
     const axiosInstance = axios.create({
         baseURL: 'http://127.0.0.1:8080/api/',
         timeout: 5000,
@@ -23,17 +24,19 @@ function Admin() {
         }
     });
 
+    // Interception des réponses pour gérer le rafraîchissement du token
     axiosInstance.interceptors.response.use(async config => {
         const token = localStorage.getItem('token');
         const refreshToken = localStorage.getItem('refresh_token');
 
+        // Si un token existe, vérifie sa date d'expiration
         if(token) {
             const tokenExp = JSON.parse(atob(token.split('.')[1])).exp;
             const currentTime = Date.now() / 1000;
 
-            if (tokenExp - currentTime < 60 * 30) { // Si le token expire dans moins d'une heure
+            // Si le token expire dans moins d'une heure, demande un nouveau token
+            if (tokenExp - currentTime < 60 * 30) {
                 try {
-                    // Demande un nouveau token
                     const response = await axiosInstance.post('/auth/refresh-token', {
                         refresh_token: refreshToken
                     }, {
@@ -52,8 +55,8 @@ function Admin() {
                 }
             }
 
+            // Si le token est expiré, supprime le token du local storage
             if (tokenExp < currentTime) {
-                // Si le token est expiré, suppression du session storage
                 localStorage.removeItem('token');
             }
         }
@@ -63,11 +66,14 @@ function Admin() {
         return Promise.reject(error);
     });
 
+    // Utilisation du hook useNavigate pour la navigation
     const navigate = useNavigate();
-    //Récupération du token
+
+    // Récupération du token et du nom d'utilisateur du local storage
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('username');
-    //vérifier que l'utilisateur est connecté
+
+    // Vérification que l'utilisateur est connecté
     useEffect(() => {
         if (!token) {
             navigate('/connexion_admin');
@@ -84,8 +90,10 @@ function Admin() {
 
     }, [navigate, token]);
 
+    // État pour stocker les articles
     const [articles, setArticles] = useState([]);
-    // récupérer tous les articles pour le dashboard
+
+    // Récupération des articles lors du chargement du composant
     useEffect(() => {
         fetch('http://127.0.0.1:8080/api/articles/')
             .then(response => response.json())
@@ -93,13 +101,15 @@ function Admin() {
             .catch(error => console.error('Erreur:', error));
     }, []);
 
+    // Références pour stocker l'éditeur Quill et son instance
     const quillInstanceRef = useRef(null);
-    const quillRef = useRef(null); // Crée une référence pour stocker l'éditeur Quill
+    const quillRef = useRef(null);
 
+    // Initialisation de l'éditeur Quill lors du chargement du composant
     useEffect(() => {
         if (quillRef.current) {
             const quill = new Quill(quillRef.current, {
-                theme: 'snow', // Spécifie le thème à utiliser
+                theme: 'snow',
                 placeholder: 'Rédigez votre article ici...',
                 modules: {
                     toolbar: [
@@ -112,14 +122,12 @@ function Admin() {
                         ['clean']
                     ]
                 },
-
             });
             quillInstanceRef.current = quill;
         }
     }, []);
 
-
-
+    // Options pour le champ de sélection de la catégorie
     const currencies = [
         {
             value: 1,
@@ -143,6 +151,7 @@ function Admin() {
         },
     ];
 
+    // État pour stocker les valeurs du formulaire
     const [state, setState] = useState({
         title: "",
         category: 1,
@@ -151,6 +160,7 @@ function Admin() {
         photo: null,
     });
 
+    // Gestionnaire d'événements pour les changements de valeur des champs du formulaire
     const InputChange = (event) => {
         const { name, value } = event.target;
         setState((props) => ({
@@ -159,6 +169,7 @@ function Admin() {
         }));
     };
 
+    // Gestionnaire d'événements pour le changement de fichier
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setState((props) => ({
@@ -167,7 +178,7 @@ function Admin() {
         }));
     };
 
-
+    // Gestionnaire d'événements pour la soumission du formulaire
     const formSubmit = (event) => {
         event.preventDefault();
 
@@ -181,43 +192,8 @@ function Admin() {
         formData.append('categoryIds', state.category);
         formData.append('content', content);
         formData.append('image', state.photo);
-        console.log(formData.get('categoryIds'));
-        /*const dataJson = JSON.stringify({
-            title: state.title,
-            description: state.description,
-            author: "1",
-            category: state.category,
-            content: content,
-            image: state.photo
-        });*/
 
-        /*const init = {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': `${token}`,
-            },
-            body: dataJson
-        };
-        console.log(init)
-        fetch("http://127.0.0.1:8080/api/articles/", init)
-            .then((response) => {
-                if(response.status === 200){
-                    alert('Article créé avec succès');
-                    //let data = response.json();
-                }
-                else{
-                    alert("Erreur, la création de l'article n'a pas fonctionné")
-                }
-                return response.json();
-            })
-            .then(function (data) {
-                navigate('/categorie/transport/article/' + data.id)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });*/
+        // Envoi des données du formulaire à l'API
         axiosInstance.post('/articles/', formData)
             .then(response => {
                 console.log(response.data);
@@ -225,32 +201,13 @@ function Admin() {
                 navigate('/categorie/transport/article/' + response.data.id)
             })
             .catch(error => {
-
                 console.error(error);
                 alert("Erreur, la création de l'article n'a pas fonctionné")
             });
-
     }
 
+    // Fonction pour supprimer un article
     const deleteArticle = (id) => {
-        /*fetch(`http://127.0.0.1:8080/api/articles/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `${token}`,
-            }
-        })
-            .then((response) => {
-                if(response.ok) {
-                    setArticles(articles.filter(article => article.id !== id));
-                    alert('Article supprimé avec succès')
-                } else {
-                    alert('Erreur, la suppression de l\'article n\'a pas fonctionné');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });*/
-
         axiosInstance.delete(`/articles/${id}`)
             .then(response => {
                 alert('Article supprimé avec succès');
@@ -262,6 +219,8 @@ function Admin() {
                 console.error(error);
             });
     };
+
+    // Fonction pour se déconnecter
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('username');
@@ -270,6 +229,7 @@ function Admin() {
         window.location.reload();
     };
 
+    // Fonction pour supprimer tous les articles
     const deleteAllarticles = () => {
         axiosInstance.delete(`/articles/`)
             .then(response => {
@@ -281,95 +241,96 @@ function Admin() {
                 console.error(error);
             });
     }
-  return (
-    <>
-        <Menu></Menu>
-        <main className={styles.admin}>
-            <h1>Bienvenue sur votre espace administrateur {user}</h1>
-            <section>
-                <h2>Créer un nouvel article</h2>
-                <Box
-                    component="form"
-                    sx={{
-                        '& .MuiTextField-root': { m: 1, width: '100%' },
-                    }}
-                    noValidate
-                    autoComplete="off"
-                    onSubmit={formSubmit}
-                >
-                    <div className={styles.formulaire}>
-                        <TextField
-                            required
-                            className={"input"}
-                            name={"title"}
-                            id="outlined-required"
-                            label="Titre"
-                            onChange={InputChange}
-                        />
-                        <TextField
-                            className={"input"}
-                            id="outlined-select-currency"
-                            select
-                            label="Catégorie de l'article"
-                            helperText="Sélectionnez à quelle catégorie appartient l'article"
-                            name={"category"}
-                            defaultValue="1"
-                            onChange={InputChange}
-                        >
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
-                        <TextField
-                            className={"input"}
-                            id="outlined-multiline-static"
-                            name={"description"}
-                            label="Description de l'article"
-                            multiline
-                            rows={4}
-                            onChange={InputChange}
-                        />
-                        <label>Ecrire ici le contenu de l'article</label>
-                        <div ref={quillRef} className={"input"}>
 
+    // Rendu du composant
+    return (
+        <>
+            <Menu></Menu>
+            <main className={styles.admin}>
+                <h1>Bienvenue sur votre espace administrateur {user}</h1>
+                <section>
+                    <h2>Créer un nouvel article</h2>
+                    <Box
+                        component="form"
+                        sx={{
+                            '& .MuiTextField-root': { m: 1, width: '100%' },
+                        }}
+                        noValidate
+                        autoComplete="off"
+                        onSubmit={formSubmit}
+                    >
+                        <div className={styles.formulaire}>
+                            <TextField
+                                required
+                                className={"input"}
+                                name={"title"}
+                                id="outlined-required"
+                                label="Titre"
+                                onChange={InputChange}
+                            />
+                            <TextField
+                                className={"input"}
+                                id="outlined-select-currency"
+                                select
+                                label="Catégorie de l'article"
+                                helperText="Sélectionnez à quelle catégorie appartient l'article"
+                                name={"category"}
+                                defaultValue="1"
+                                onChange={InputChange}
+                            >
+                                {currencies.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                            <TextField
+                                className={"input"}
+                                id="outlined-multiline-static"
+                                name={"description"}
+                                label="Description de l'article"
+                                multiline
+                                rows={4}
+                                onChange={InputChange}
+                            />
+                            <div ref={quillRef} className={"input"}>
+
+                            </div>
+                            <label>Ajouter une photo à l'article</label>
+                            <TextField
+                                className={"input"}
+                                type="file"
+                                name="photo"
+                                onChange={handleFileChange}
+                            />
                         </div>
-                        <label>Ajouter une photo à l'article</label>
-                        <TextField
-                            className={"input"}
-                            type="file"
-                            name="photo"
-                            onChange={handleFileChange}
-                        />
+                        <button className={"btn"}>Créer l'article</button>
+                    </Box>
+                </section>
+                <section>
+                    <div className={styles.titre_liste_article}>
+                        <h2>Liste des articles existants</h2>
+                        <button className={`btn ${styles.btn_delete}`} onClick={deleteAllarticles}>Effacer tous les articles</button>
                     </div>
-                    <button className={"btn"}>Créer l'article</button>
-                </Box>
-            </section>
-            <section>
-                <div className={styles.titre_liste_article}>
-                    <h2>Liste des articles existants</h2>
-                    <button className={`btn ${styles.btn_delete}`} onClick={deleteAllarticles}>Effacer tous les articles</button>
-                </div>
 
-                <div className={styles.articles}>
-                    {articles.length > 0 ? (
-                        articles.map(article => (
-                            <AdminArticle key={article.id} id={article.id} title={article.title} description={article.headline} category={article.category} onDelete={deleteArticle}/>
-                        ))
-                    ) : (
-                        <p>Aucun article existant!</p>
-                    )}
-                </div>
-            </section>
+                    <div className={styles.articles}>
+                        {articles.length > 0 ? (
+                            articles.map(article => (
+                                <AdminArticle key={article.id} id={article.id} title={article.title} description={article.headline} category={article.category} onDelete={deleteArticle}/>
+                            ))
+                        ) : (
+                            <p>Aucun article existant!</p>
+                        )}
+                    </div>
+                </section>
 
-        </main>
-        <div className={styles.logout}>
-            <button className={`btn ${styles.btn_logout}`} onClick={handleLogout}>Se déconnecter</button>
-        </div>
-        <Footer></Footer>
-    </>
-  );
+            </main>
+            <div className={styles.logout}>
+                <button className={`btn ${styles.btn_logout}`} onClick={handleLogout}>Se déconnecter</button>
+            </div>
+            <Footer></Footer>
+        </>
+    );
 }
 
 export default Admin;
